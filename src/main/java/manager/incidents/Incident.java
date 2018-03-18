@@ -1,8 +1,14 @@
 package manager.incidents;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
 import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import domain.User;
 
 @Document(collection = "incidents")
 public class Incident {
@@ -12,39 +18,58 @@ public class Incident {
 
 	private String name;
 	private String description;
-	private String username;
-	private String password;
+	private User agent;
 	private String tags;
-	private String location;
+	private LatLng location;
 	private InciState state;
+	private Map<String, Object> properties;
 	
 	
 	Incident(){}
 	
 	
-	public Incident(String name, String description, String username, String password, String tags, String location,
+	public Incident(String name, String description, User agent, String tags, LatLng location,
 			InciState state) {
 		super();
 		this.name = name;
 		this.description = description;
-		this.username = username;
-		this.password = password;
+		this.agent=agent;
 		this.tags = tags;
 		this.location = location;
 		this.state = state;
+	}
+	
+	public Incident(String name, String description, User agent, String tags, LatLng location,
+			InciState state, HashMap<String,Object> properties) {
+		this.name = name;
+		this.description = description;
+		this.agent=agent;
+		this.tags = tags;
+		this.location = location;
+		this.state = state;
+		this.properties=properties;
 	}
 	
 	
 
 	@Override
 	public String toString() {
+		if(agent.getKind().equals("SENSOR")){
+			StringBuilder sb = new StringBuilder();
+			sb.append(",properties='");
+			Iterator it = properties.entrySet().iterator();
+		    while (it.hasNext()) {
+		        Map.Entry pair = (Map.Entry)it.next();
+		        sb.append(pair.getKey()+":"+pair.getValue()+" ");
+		    }
+		    sb.append("'");
+		}
 		return "{"
 				+ "name='" + name+"'" 
 				+ ",description='" + description+"'"  
-				+ ",username='" + username +"'" 
-				+ ",password='"+ password+"'"  
+				+ ",agent='" + agent.getUserId() +"'" 
 				+ ",tags='" + tags +"'" 
-				+ ",location='" + location +"'" 
+				+ ",location='" + location.toString() +"'"
 				+ ",state='" + state + "'}";
 	}
 
@@ -76,6 +101,16 @@ public class Incident {
 	}
 
 
+	public Map<String, Object> getProperties() {
+		return properties;
+	}
+
+
+	public void setProperties(Map<String, Object> properties) {
+		this.properties = properties;
+	}
+
+
 	public ObjectId getId() {
 		return id;
 	}
@@ -91,28 +126,27 @@ public class Incident {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getUsername() {
-		return username;
+
+	public User getAgent() {
+		return agent;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+
+
+	public void setAgent(User agent) {
+		this.agent = agent;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
+
 	public String getTags() {
 		return tags;
 	}
 	public void setTags(String tags) {
 		this.tags = tags;
 	}
-	public String getLocation() {
+	public LatLng getLocation() {
 		return location;
 	}
-	public void setLocation(String location) {
+	public void setLocation(LatLng location) {
 		this.location = location;
 	}
 	public InciState getState() {
