@@ -2,6 +2,8 @@ package manager_tests;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,10 +19,10 @@ public class IncidentTests {
 
 	@Before
 	public void setUp() {
-		i1 = new Incident("i1", "System failure", new User("alum", "alumnossi", "seguridad"), "failure,fatal",
-				new LatLng(20.2, 17.2), InciState.OPEN);
-		i2 = new Incident("i2", "Overheated system", new User("alum", "alumnossi", "seguridad"), "heat,minor",
-				new LatLng(20.2, 17.2), InciState.OPEN);
+		i1 = new Incident("i1", "System failure", new User("alum", "alumnossi", "seguridad"), new ArrayList<String>(),
+				new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>());
+		i2 = new Incident("i2", "Overheated system", new User("alum", "alumnossi", "seguridad"),  new ArrayList<String>(),
+				new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>());
 	}
 
 	@Test

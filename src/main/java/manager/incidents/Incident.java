@@ -2,6 +2,7 @@ package manager.incidents;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
@@ -19,17 +20,18 @@ public class Incident {
 	private String name;
 	private String description;
 	private User agent;
-	private String tags;
+	private List<String> tags;
 	private LatLng location;
 	private InciState state;
 	private Map<String, Object> properties;
+	private List<String> multimedia;
 	
 	
 	Incident(){}
 	
 	
-	public Incident(String name, String description, User agent, String tags, LatLng location,
-			InciState state) {
+	public Incident(String name, String description, User agent, List<String> tags, LatLng location,
+			InciState state, List<String> multimedia) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -37,10 +39,11 @@ public class Incident {
 		this.tags = tags;
 		this.location = location;
 		this.state = state;
+		this.multimedia=multimedia;
 	}
 	
-	public Incident(String name, String description, User agent, String tags, LatLng location,
-			InciState state, HashMap<String,Object> properties) {
+	public Incident(String name, String description, User agent, List<String> tags, LatLng location,
+			InciState state, HashMap<String,Object> properties,List<String> multimedia) {
 		this.name = name;
 		this.description = description;
 		this.agent=agent;
@@ -48,6 +51,7 @@ public class Incident {
 		this.location = location;
 		this.state = state;
 		this.properties=properties;
+		this.multimedia=multimedia;
 	}
 	
 	
@@ -70,7 +74,8 @@ public class Incident {
 				+ ",agent='" + agent.getUserId() +"'" 
 				+ ",tags='" + tags +"'" 
 				+ ",location='" + location.toString() +"'"
-				+ ",state='" + state + "'}";
+				+ ",state='" + state + "'"
+				+ ",multimedia='" + multimedia + "'}";
 	}
 
 
@@ -137,10 +142,10 @@ public class Incident {
 	}
 
 
-	public String getTags() {
+	public List<String> getTags() {
 		return tags;
 	}
-	public void setTags(String tags) {
+	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
 	public LatLng getLocation() {
@@ -154,6 +159,16 @@ public class Incident {
 	}
 	public void setState(InciState state) {
 		this.state = state;
+	}
+
+
+	public List<String> getMultimedia() {
+		return multimedia;
+	}
+
+
+	public void setMultimedia(List<String> multimedia) {
+		this.multimedia = multimedia;
 	}
 	
 	
