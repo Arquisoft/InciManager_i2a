@@ -25,7 +25,7 @@ public class User {
 	private String kind;
 	private int kindCode;
 
-	User() {
+	public User() {
 
 	}
 

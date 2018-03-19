@@ -80,4 +80,9 @@ public class AgentsController {
 		}
 		return "changePassword";
 	}
+	
+	@RequestMapping(value = "/incidentMenu")
+	public String showIncidenceMenu(Model model) {
+		return "incident/add";
+	}
 }
