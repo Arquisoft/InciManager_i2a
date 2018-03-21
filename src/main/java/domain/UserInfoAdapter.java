@@ -8,14 +8,14 @@ package domain;
  */
 public class UserInfoAdapter {
 
-	private User user;
+	private Agent user;
 
-	public UserInfoAdapter(User user) {
+	public UserInfoAdapter(Agent user) {
 		this.user = user;
 	}
 
 	public UserInfo userToInfo() {
-		return new UserInfo(user.getName(), user.getLocation(), user.getEmail(), user.getUserId(),
-				user.getKind(), user.getKindCode());
+		return new UserInfo(user.getUsername(), user.getLocation(), user.getEmail(), user.getUserId(),
+				user.getKind().toString(), user.getKindCode());
 	}
 }
