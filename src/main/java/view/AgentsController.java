@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import domain.User;
+import domain.Agent;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import domain.UserLoginData;
@@ -43,7 +43,7 @@ public class AgentsController {
 	@RequestMapping(value = "/userForm", method = RequestMethod.POST)
 	public String showInfo(Model model, @ModelAttribute UserLoginData data,
 			HttpSession session) {
-		User user = part.getAgent(data.getLogin(), data.getPassword(),
+		Agent user = part.getAgent(data.getLogin(), data.getPassword(),
 				data.getKind());
 		if (user == null) {
 			throw new UserNotFoundException();
@@ -72,7 +72,7 @@ public class AgentsController {
 			@RequestParam String newPassword,
 			@RequestParam String newPasswordConfirm, HttpSession session) {
 		JasyptEncryptor encryptor = new JasyptEncryptor();
-		User loggedUser = (User) session.getAttribute("user");
+		Agent loggedUser = (Agent) session.getAttribute("user");
 		if (encryptor.checkPassword(password, loggedUser.getPassword())
 				&& newPassword.equals(newPasswordConfirm)) {
 			part.updateInfo(loggedUser, newPassword);

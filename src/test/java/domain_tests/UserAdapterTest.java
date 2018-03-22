@@ -7,7 +7,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.User;
+import domain.Agent;
+import domain.AgentKind;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 
@@ -16,15 +17,15 @@ import domain.UserInfoAdapter;
  */
 public class UserAdapterTest {
 
-	private User user1;
-	private User user2;
+	private Agent user1;
+	private Agent user2;
 
 	@Before
 	public void setUp() {
-		user1 = new User("User1", "Oviedo", "User1@hola.com", "user1Password",
-				"10", "Person", 1);
-		user2 = new User("User2", "Gijon", "User2@hola.com", "user2Password",
-				"11", "Person", 1);
+		user1 = new Agent("User1", "Oviedo", "User1@hola.com", "user1Password",
+				"10", AgentKind.PERSON, 1);
+		user2 = new Agent("User2", "Gijon", "User2@hola.com", "user2Password",
+				"11", AgentKind.PERSON, 1);
 	}
 
 	@Test
@@ -61,18 +62,18 @@ public class UserAdapterTest {
 	public void testAdapter() {
 		UserInfoAdapter adapter = new UserInfoAdapter(user1);
 		UserInfo info = adapter.userToInfo();
-		assertEquals(info.getName(), user1.getName());
+		assertEquals(info.getName(), user1.getUsername());
 		assertEquals(info.getEmail(), user1.getEmail());
-		assertEquals(info.getKind(), user1.getKind());
+		assertEquals(info.getKind(), user1.getKind().toString());
 		assertEquals(info.getKindCode(), user1.getKindCode());
 		assertEquals(info.getLocation(), user1.getLocation());
 		assertEquals(info.getId(), user1.getUserId());
 
 		UserInfoAdapter adapter1 = new UserInfoAdapter(user2);
 		UserInfo info1 = adapter1.userToInfo();
-		assertEquals(info1.getName(), user2.getName());
+		assertEquals(info1.getName(), user2.getUsername());
 		assertEquals(info1.getEmail(), user2.getEmail());
-		assertEquals(info1.getKind(), user2.getKind());
+		assertEquals(info1.getKind(), user2.getKind().toString());
 		assertEquals(info1.getKindCode(), user2.getKindCode());
 		assertEquals(info1.getLocation(), user2.getLocation());
 		assertEquals(info1.getId(), user2.getUserId());

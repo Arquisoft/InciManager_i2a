@@ -12,7 +12,7 @@ import util.JasyptEncryptor;
  */
 
 @Document(collection = "users")
-public class User {
+public class Agent {
 
 	@Id
 	private ObjectId id;
@@ -22,20 +22,20 @@ public class User {
 	private String email;
 	private String password;
 	private String userId;
-	private String kind;
+	private AgentKind kind;
 	private int kindCode;
 
-	public User() {
+	public Agent() {
 
 	}
 
-	public User(String name, String email, String password) {
+	public Agent(String name, String email, String password) {
 		this.name = name;
 		this.email = email;
 		this.password = encryptPass(password);
 	}
 
-	public User(String name, String location, String email, String password, String userId, String kind,
+	public Agent(String name, String location, String email, String password, String userId, AgentKind kind,
 			int kindCode) {
 		this(name, email, password);
 		this.location = location;
@@ -51,7 +51,7 @@ public class User {
 		sb.append(",location='").append(location).append('\'');
 		sb.append(",email='").append(email).append('\'');
 		sb.append(",id='").append(userId).append('\'');
-		sb.append(",kind='").append(getKind()).append('\'');
+		sb.append(",kind='").append(getKind().toString()).append('\'');
 		sb.append(",kindCode='").append(kindCode).append("'");
 		sb.append('}');
 		return sb.toString();
@@ -64,7 +64,7 @@ public class User {
 		if (o == null || getClass() != o.getClass())
 			return false;
 
-		User user = (User) o;
+		Agent user = (Agent) o;
 
 		return userId.equals(user.userId);
 
@@ -95,11 +95,11 @@ public class User {
 		this.password = encryptPass(password);
 	}
 
-	public String getName() {
+	public String getUsername() {
 		return name;
 	}
 
-	public void setName(String name) {
+	public void setUsername(String name) {
 		this.name = name;
 	}
 
@@ -111,11 +111,11 @@ public class User {
 		this.location = location;
 	}
 
-	public String getKind() {
+	public AgentKind getKind() {
 		return kind;
 	}
 
-	public void setKind(String kind) {
+	public void setKind(AgentKind kind) {
 		this.kind = kind;
 	}
 
