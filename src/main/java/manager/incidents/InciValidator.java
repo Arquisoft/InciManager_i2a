@@ -1,5 +1,6 @@
 package manager.incidents;
 
+import org.json.JSONArray;
 import org.springframework.stereotype.Component;
 
 import com.mongodb.util.JSON;
@@ -10,16 +11,10 @@ import net.minidev.json.JSONObject;
 @Component
 public class InciValidator {
 
-	public boolean isEmergency(JSON incidentJSON) {
+	public boolean isEmergency(Incident incident) {
 		
-		incidentJSON.
-		for(int i=0; i<dataJsonArray.length; i++) {
-		   JSONObject dataObj = dataJsonArray.get(i);
-		   String id = dataObj.getString("id");
-		   //Similarly you can extract for other fields.
-		}
-		if(incidentJSON.getAgent().getKind().equals(AgentKind.SENSOR)) {
-			return incidentJSON.isEmergency();
+		if(incident.getAgent().getKind().equals(AgentKind.SENSOR)) {
+			return incident.isEmergency();
 		}
 		return false;
 	}
