@@ -61,15 +61,17 @@ public class Incident {
 
 	@Override
 	public String toString() {
-		if(agent.getKind().equals("SENSOR")){
-			StringBuilder sb = new StringBuilder();
-			sb.append(",properties='");
-			Iterator it = properties.entrySet().iterator();
-		    while (it.hasNext()) {
-		        Map.Entry pair = (Map.Entry)it.next();
-		        sb.append(pair.getKey()+":"+pair.getValue()+" ");
-		    }
-		    sb.append("'");
+		if(agent.getKind()!=null){
+			if(agent.getKind().equals("SENSOR")){
+				StringBuilder sb = new StringBuilder();
+				sb.append(",properties='");
+				Iterator it = properties.entrySet().iterator();
+			    while (it.hasNext()) {
+			        Map.Entry pair = (Map.Entry)it.next();
+			        sb.append(pair.getKey()+":"+pair.getValue()+" ");
+			    }
+			    sb.append("'");
+			}
 		}
 		return "{"
 				+ "name='" + name+"'" 
