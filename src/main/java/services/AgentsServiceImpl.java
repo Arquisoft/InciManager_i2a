@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dbmanagement.Database;
-import domain.User;
+import domain.Agent;
 import util.JasyptEncryptor;
 
 /**
@@ -22,15 +22,15 @@ public class AgentsServiceImpl implements AgentsService {
     }
 
     @Override
-    public User getAgent(String name, String password, String kind) {
-        User user = dat.getAgent(name);
+    public Agent getAgent(String name, String password, String kind) {
+        Agent user = dat.getAgent(name);
         if(user != null && encryptor.checkPassword(password, user.getPassword()))
             return user;
         else return null;
     }
 
     @Override
-    public void updateInfo(User user, String newPassword) {
+    public void updateInfo(Agent user, String newPassword) {
     	//It is not necessary, done by the domain class itself.
     	user.setPassword(newPassword);
     	dat.updateInfo(user);

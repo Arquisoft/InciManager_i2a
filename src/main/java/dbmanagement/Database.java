@@ -1,6 +1,7 @@
 package dbmanagement;
 
-import domain.User;
+import domain.Agent;
+import manager.incidents.Incident;
 
 /**
  * Created by Nicolás on 14/02/2017.
@@ -9,8 +10,10 @@ import domain.User;
  */
 public interface Database {
 
-    void updateInfo(User user);
+    void updateInfo(Agent user);
 
-    User getAgent(String name);
+    Agent getAgent(String name);
+
+	void saveIncident(Incident incident);
 
 }

@@ -9,7 +9,7 @@ import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import domain.User;
+import domain.Agent;
 
 @Document(collection = "incidents")
 public class Incident {
@@ -19,18 +19,21 @@ public class Incident {
 
 	private String name;
 	private String description;
-	private User agent;
+	private Agent agent;
 	private List<String> tags;
 	private LatLng location;
 	private InciState state;
 	private Map<String, Object> properties;
 	private List<String> multimedia;
 	
+	private boolean emergency=false;
 	
-	Incident(){}
+	
+	public Incident(){}
 	
 	
-	public Incident(String name, String description, User agent, List<String> tags, LatLng location,
+	
+	public Incident(String name, String description, Agent agent, List<String> tags, LatLng location,
 			InciState state, List<String> multimedia) {
 		super();
 		this.name = name;
@@ -42,7 +45,7 @@ public class Incident {
 		this.multimedia=multimedia;
 	}
 	
-	public Incident(String name, String description, User agent, List<String> tags, LatLng location,
+	public Incident(String name, String description, Agent agent, List<String> tags, LatLng location,
 			InciState state, HashMap<String,Object> properties,List<String> multimedia) {
 		this.name = name;
 		this.description = description;
@@ -132,12 +135,12 @@ public class Incident {
 		this.description = description;
 	}
 
-	public User getAgent() {
+	public Agent getAgent() {
 		return agent;
 	}
 
 
-	public void setAgent(User agent) {
+	public void setAgent(Agent agent) {
 		this.agent = agent;
 	}
 
@@ -147,6 +150,10 @@ public class Incident {
 	}
 	public void setTags(List<String> tags) {
 		this.tags = tags;
+	}
+	
+	public void addTag(String tag) {
+		this.tags.add(tag);
 	}
 	public LatLng getLocation() {
 		return location;
@@ -170,6 +177,20 @@ public class Incident {
 	public void setMultimedia(List<String> multimedia) {
 		this.multimedia = multimedia;
 	}
+
+	public void addFile(String file) {
+		this.multimedia.add(file);
+	}	
+	
+	public boolean isEmergency() {
+		return emergency;
+	}
+
+
+	public void setEmergency(boolean emergency) {
+		this.emergency = emergency;
+	}
+	
 	
 	
 

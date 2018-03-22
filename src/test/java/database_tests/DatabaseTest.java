@@ -10,8 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import dbmanagement.Database;
-import dbmanagement.UsersRepository;
-import domain.User;
+import dbmanagement.AgentsRepository;
+import domain.Agent;
+import domain.AgentKind;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import main.Application;
@@ -25,11 +26,11 @@ import util.JasyptEncryptor;
 public class DatabaseTest {
 
 	@Autowired
-	private UsersRepository repo;
+	private AgentsRepository repo;
 
 	// User to use as reference for test
-	private User testedUser;
-	private User testedUser2;
+	private Agent testedUser;
+	private Agent testedUser2;
 
 	@Autowired
 	private Database dat;
@@ -45,12 +46,12 @@ public class DatabaseTest {
 	 */
 	@Before
 	public void setUp() {
-		testedUser = new User("Luis", "10N20E", "LGracia@gmail.com", "Luis123",
-				"100", "Person", 1);
+		testedUser = new Agent("Luis", "10N20E", "LGracia@gmail.com", "Luis123",
+				"100", AgentKind.PERSON, 1);
 		repo.insert(testedUser);
 
-		testedUser2 = new User("Maria", "20N20E", "asd", "pass14753", "321",
-				"Person", 1);
+		testedUser2 = new Agent("Maria", "20N20E", "asd", "pass14753", "321",
+				AgentKind.PERSON, 1);
 		repo.insert(testedUser2);
 	}
 
@@ -64,7 +65,7 @@ public class DatabaseTest {
 	public void testGetAgent() {
 		// It should be previously encoded if the DB is given so this may be
 		// changed.
-		User user = dat.getAgent("Luis");
+		Agent user = dat.getAgent("Luis");
 		user.setLocation("USA");
 		Assert.assertEquals(user.getLocation(), "USA");
 	}
@@ -73,11 +74,11 @@ public class DatabaseTest {
 	public void testUpdateInfoWithPassword() {
 		// It should be previously encoded if the DB is given so this may be
 		// changed.
-		User user = dat.getAgent("Luis");
+		Agent user = dat.getAgent("Luis");
 		user.setPassword("confidencial");
 		JasyptEncryptor encryptor = new JasyptEncryptor();
 		dat.updateInfo(user);
-		User userAfter = dat.getAgent("Luis");
+		Agent userAfter = dat.getAgent("Luis");
 		Assert.assertTrue(encryptor.checkPassword("confidencial",
 				userAfter.getPassword())); // They should be the same when we
 											// introduce the password.
@@ -88,8 +89,8 @@ public class DatabaseTest {
 
 	@Test
 	public void testUpdateInfoAndAdaptation() {
-		User user = dat.getAgent("Maria");
-		Assert.assertEquals("Maria", user.getName());
+		Agent user = dat.getAgent("Maria");
+		Assert.assertEquals("Maria", user.getUsername());
 		Assert.assertEquals("20N20E", user.getLocation());
 		Assert.assertEquals("321", user.getUserId());
 		Assert.assertEquals("asd", user.getEmail());
@@ -98,16 +99,16 @@ public class DatabaseTest {
 
 		UserInfo userInfo = userAdapter.userToInfo();
 
-		Assert.assertEquals(user.getName(), userInfo.getName());
+		Assert.assertEquals(user.getUsername(), userInfo.getName());
 		Assert.assertEquals(user.getEmail(), userInfo.getEmail());
 		Assert.assertEquals(user.getUserId(), userInfo.getId());
 
-		user.setName("Pepa");
+		user.setUsername("Pepa");
 		user.setEmail("asd@gmail.com");
 
 		dat.updateInfo(user);
-		User updatedUser = dat.getAgent("Pepa");
-		Assert.assertEquals("Pepa", updatedUser.getName());
+		Agent updatedUser = dat.getAgent("Pepa");
+		Assert.assertEquals("Pepa", updatedUser.getUsername());
 		Assert.assertEquals("321", updatedUser.getUserId());
 		Assert.assertEquals("asd@gmail.com", updatedUser.getEmail());
 	}

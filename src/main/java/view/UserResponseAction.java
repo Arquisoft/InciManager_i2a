@@ -3,7 +3,7 @@ package view;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import domain.User;
+import domain.Agent;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import domain.UserLoginData;
@@ -22,7 +22,7 @@ public class UserResponseAction {
 	}
 
 	public ResponseEntity<UserInfo> execute(UserLoginData info) {
-		User user = part.getAgent(info.getLogin(), info.getPassword(),
+		Agent user = part.getAgent(info.getLogin(), info.getPassword(),
 				info.getKind());
 		UserInfoAdapter data = new UserInfoAdapter(user);
 		if (user == null) {

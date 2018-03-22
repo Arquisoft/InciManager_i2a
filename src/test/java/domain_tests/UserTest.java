@@ -4,7 +4,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.User;
+import domain.Agent;
+import domain.AgentKind;
 import util.JasyptEncryptor;
 
 /**
@@ -12,34 +13,34 @@ import util.JasyptEncryptor;
  */
 public class UserTest {
 
-	private User marcos;
-	private User alba;
-	private User javier;
+	private Agent marcos;
+	private Agent alba;
+	private Agent javier;
 
 	@Before
 	public void setUp() {
-		marcos = new User("Marcos", "Oviedo", "User1@hola.com", "user1Password",
-				"10", "Person", 1);
-		alba = new User("Alba", "Gijon", "User2@hola.com", "user2Password",
-				"11", "Person", 1);
-		javier = new User("Javier", "Aviles", "User3@hola.com", "user3Password",
-				"12", "Person", 1);
+		marcos = new Agent("Marcos", "Oviedo", "User1@hola.com", "user1Password",
+				"10", AgentKind.PERSON, 1);
+		alba = new Agent("Alba", "Gijon", "User2@hola.com", "user2Password",
+				"11", AgentKind.PERSON, 1);
+		javier = new Agent("Javier", "Aviles", "User3@hola.com", "user3Password",
+				"12", AgentKind.PERSON, 1);
 	}
 
 	@Test
 	public void firstNameTest() {
-		Assert.assertEquals("Marcos", marcos.getName());
-		Assert.assertEquals("Alba", alba.getName());
-		Assert.assertEquals("Javier", javier.getName());
+		Assert.assertEquals("Marcos", marcos.getUsername());
+		Assert.assertEquals("Alba", alba.getUsername());
+		Assert.assertEquals("Javier", javier.getUsername());
 
-		marcos.setName("Antonio");
-		Assert.assertEquals("Antonio", marcos.getName());
+		marcos.setUsername("Antonio");
+		Assert.assertEquals("Antonio", marcos.getUsername());
 
-		alba.setName("Pepe");
-		Assert.assertEquals("Pepe", alba.getName());
+		alba.setUsername("Pepe");
+		Assert.assertEquals("Pepe", alba.getUsername());
 
-		javier.setName("Roberto");
-		Assert.assertEquals("Roberto", javier.getName());
+		javier.setUsername("Roberto");
+		Assert.assertEquals("Roberto", javier.getUsername());
 	}
 
 	@Test
@@ -54,12 +55,12 @@ public class UserTest {
 
 	@Test
 	public void kindTest() {
-		Assert.assertEquals("Person", marcos.getKind());
-		Assert.assertEquals("Person", alba.getKind());
-		Assert.assertEquals("Person", javier.getKind());
+		Assert.assertEquals(AgentKind.PERSON.toString(), marcos.getKind().toString());
+		Assert.assertEquals(AgentKind.PERSON.toString(), alba.getKind().toString());
+		Assert.assertEquals(AgentKind.PERSON.toString(), javier.getKind().toString());
 
-		marcos.setKind("Sensor");
-		Assert.assertEquals("Sensor", marcos.getKind());
+		marcos.setKind(AgentKind.SENSOR);
+		Assert.assertEquals(AgentKind.SENSOR.toString(), marcos.getKind().toString());
 	}
 
 	@Test
@@ -117,7 +118,7 @@ public class UserTest {
 
 	@Test
 	public void toStringTest() {
-		String output = "{name=\'Marcos\',location=\'Oviedo\',email=\'User1@hola.com\',id=\'10\',kind=\'Person\'"
+		String output = "{name=\'Marcos\',location=\'Oviedo\',email=\'User1@hola.com\',id=\'10\',kind=\'PERSON\'"
 				+ ",kindCode=\'1\'}";
 		Assert.assertEquals(output, marcos.toString());
 	}
