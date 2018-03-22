@@ -15,24 +15,26 @@ import manager.producers.KafkaProducer;
 @Controller
 public class IncidentController {
 
-    @Autowired
-    private KafkaProducer kafkaProducer;
-    @Autowired
-    private InciValidator inciValidator;
+	@Autowired
+	private KafkaProducer kafkaProducer;
+	@Autowired
+	private InciValidator inciValidator;
 
-    @RequestMapping("/")
-    public String landing(Model model) {
-        model.addAttribute("message", new Message());
-        return "index";
-    }
-    
-    @RequestMapping("/send")
-    public String send(Model model, @ModelAttribute Message message) {
-    	
-    	Incident incident=null;// Need to change thi when receiving object
-    	inciValidator.isEmergency(incident);
-        kafkaProducer.send("exampleTopic", message.getMessage());
-        return "data";
-    }
+	@RequestMapping("/")
+	public String landing(Model model) {
+		model.addAttribute("message", new Message());
+		return "index";
+	}
+
+	@RequestMapping("/send")
+	public String send(Model model, @ModelAttribute Message message) {
+
+		Incident incident = null;// Need to change this when receiving object
+		if (inciValidator.isEmergency(incident)) {
+			
+			kafkaProducer.send("exampleTopic", message.getMessage());
+		}
+		return "data";
+	}
 
 }
