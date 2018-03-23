@@ -1,12 +1,8 @@
 package manager.incidents;
 
-import org.json.JSONArray;
 import org.springframework.stereotype.Component;
 
-import com.mongodb.util.JSON;
-
 import domain.AgentKind;
-import net.minidev.json.JSONObject;
 
 @Component
 public class InciValidator {
