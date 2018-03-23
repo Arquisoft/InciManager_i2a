@@ -13,14 +13,14 @@ public class UserLoginData {
 
 	private String login;
 	private String password;
-	private String kind;
+	private AgentKind kind;
 	private List<String> kindCodes = new ArrayList<String>();
 
 	public UserLoginData(){
 		identifyAgentType();
 	}
 
-	public UserLoginData(String login, String password, String kind) {
+	public UserLoginData(String login, String password, AgentKind kind) {
 		this.login = login;
 		this.password = password;
 		this.setKind(kind);
@@ -43,11 +43,11 @@ public class UserLoginData {
 		this.password = password;
 	}
 
-	public String getKind() {
+	public AgentKind getKind() {
 		return kind;
 	}
 
-	public void setKind(String kind) {
+	public void setKind(AgentKind kind) {
 		this.kind = kind;
 	}
 	

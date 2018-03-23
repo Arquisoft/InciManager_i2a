@@ -21,6 +21,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import controllers.UserNotFoundException;
 /**
  * Created by Jorge.7
  * Test for the AgentsDataController, mainly focused on REST requests
@@ -30,7 +31,6 @@ import dbmanagement.AgentsRepository;
 import domain.Agent;
 import domain.AgentKind;
 import main.Application;
-import view.UserNotFoundException;
 
 @SpringBootTest(classes = { Application.class })
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -67,17 +67,17 @@ public class AgentsDataControllerTest {
 		// Setting up users
 		plainPassword = "pass14753";
 		javier = new Agent("Javier", "Aviles", "User3@hola.com", plainPassword,
-				"12", AgentKind.PERSON, 1);
+				"12", AgentKind.Person, 1);
 		repo.insert(javier);
 
 		plainPassword = "pass14753";
 		marcos = new Agent("Marcos", "Oviedo", "User1@hola.com", plainPassword,
-				"10", AgentKind.PERSON, 1);
+				"10", AgentKind.Person, 1);
 		repo.insert(marcos);
 
 		plainPassword = "pass14753";
 		alba = new Agent("Alba", "Gijon", "User2@hola.com", plainPassword, "11",
-				AgentKind.PERSON, 1);
+				AgentKind.Person, 1);
 		repo.insert(alba);
 	}
 
@@ -232,7 +232,7 @@ public class AgentsDataControllerTest {
 	@Test
 	public void testForNotFound() throws Exception {
 		String payload = String.format(QUERY, "Nothing", "Not really",
-				"Nothing");
+				AgentKind.Person);
 		MockHttpServletRequestBuilder request = post("/user").session(session)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(payload.getBytes());
