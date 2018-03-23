@@ -1,3 +1,4 @@
+
 package manager.incidents;
 
 import java.util.ArrayList;
