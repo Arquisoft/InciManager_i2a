@@ -23,9 +23,9 @@ public class UserAdapterTest {
 	@Before
 	public void setUp() {
 		user1 = new Agent("User1", "Oviedo", "User1@hola.com", "user1Password",
-				"10", AgentKind.PERSON, 1);
+				"10", AgentKind.Person, 1);
 		user2 = new Agent("User2", "Gijon", "User2@hola.com", "user2Password",
-				"11", AgentKind.PERSON, 1);
+				"11", AgentKind.Person, 1);
 	}
 
 	@Test

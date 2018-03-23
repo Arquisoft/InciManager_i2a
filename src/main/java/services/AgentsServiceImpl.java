@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import dbmanagement.Database;
 import domain.Agent;
+import domain.AgentKind;
 import util.JasyptEncryptor;
 
 /**
@@ -22,7 +23,7 @@ public class AgentsServiceImpl implements AgentsService {
     }
 
     @Override
-    public Agent getAgent(String name, String password, String kind) {
+    public Agent getAgent(String name, String password) {
         Agent user = dat.getAgent(name);
         if(user != null && encryptor.checkPassword(password, user.getPassword()))
             return user;
@@ -35,4 +36,12 @@ public class AgentsServiceImpl implements AgentsService {
     	user.setPassword(newPassword);
     	dat.updateInfo(user);
     }
+
+	@Override
+	public Agent getAgent(String name, String password, AgentKind kind) {
+		Agent user = dat.getAgent(name);
+        if(user != null && encryptor.checkPassword(password, user.getPassword()))
+            return user;
+        else return null;
+	}
 }

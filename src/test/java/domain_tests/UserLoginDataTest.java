@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import domain.AgentKind;
 import domain.UserLoginData;
 
 /**
@@ -20,7 +21,7 @@ public class UserLoginDataTest {
 		test = new UserLoginData();
 		test.setLogin("hola1");
 		test.setPassword("holaPassword");
-		test2 = new UserLoginData("hola2", "passwHola", "Person");
+		test2 = new UserLoginData("hola2", "passwHola", AgentKind.Person);
 	}
 
 	@Test
@@ -49,13 +50,13 @@ public class UserLoginDataTest {
 
 	@Test
 	public void getKind() throws Exception {
-		assertEquals("Person", test2.getKind());
+		assertEquals(AgentKind.Person, test2.getKind());
 	}
 
 	@Test
 	public void setKind() throws Exception {
-		test2.setKind("Sensor");
-		assertEquals("Sensor", test2.getKind());
+		test2.setKind(AgentKind.SENSOR);
+		assertEquals(AgentKind.SENSOR, test2.getKind());
 	}
 	
 	@Test

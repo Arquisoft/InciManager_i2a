@@ -26,7 +26,7 @@
 
     <!-- container class in order to tell BS to treat it as a container and it is usually container -->
     <div class="container">
-        <form action="#" th:action="@{/send}" id="incidencia" class="form-signin" method="post">
+        <form action="#" th:action="@{/send}" id="incidencia" class="form-signin" method="post" th:object="${incident}">
           <h2>Incidence Information</h2>
                 <div class="form-group">
 				<label class="control-label col-sm-2" for="name">Name:</label> 
@@ -36,25 +36,38 @@
 					</div>
 				</div>
 				<div class="form-group">
-				<label class="control-label col-sm-2" for="name">Description:</label> 
+				<label class="control-label col-sm-2" for="description">Description:</label> 
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="description"
 							required="true" />
 					</div>
 				</div>
 				<div class="form-group">
-				<label class="control-label col-sm-2" for="name">Tags:</label> 
+				<label class="control-label col-sm-2" for="tags">Tags:</label> 
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="tags"
 							required="true" />
 					</div>
 				</div>
 				<div class="form-group">
-				<label class="control-label col-sm-2" for="name">Location:</label> 
+				<label class="control-label col-sm-2" for="lat">Lattitude:</label> 
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="location"
+						<input type="text" class="form-control" name="lat"
 							required="true" />
 					</div>
+				</div>
+				<div class="form-group">
+				<label class="control-label col-sm-2" for="lon">Longitude:</label> 
+					<div class="col-sm-10">
+						<input type="text" class="form-control" name="lon"
+							required="true" />
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="control-label col-sm-2" for="portada">Multimedia:</label>
+						<div class="col-sm-10">
+							<input type="file" class="custom-file-input" name="multimedia" />
+						</div>
 				</div>
                 <button id="Enter" name="Enter" type="submit" value="enter" class="btn btn-block btn-primary btn-lg">Send incidence</button>
         </form>

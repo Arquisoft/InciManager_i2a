@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>es.uniovi.asw</groupId>
-	<artifactId>agents_i2a</artifactId>
+	<artifactId>inciManager_i2a</artifactId>
 	<name>agents_i2a</name>
 	<version>0.0.1</version>
 
