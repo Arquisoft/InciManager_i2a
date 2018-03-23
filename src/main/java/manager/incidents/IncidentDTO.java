@@ -82,4 +82,12 @@ public class IncidentDTO {
 		this.multimedia = multimedia;
 	}
 
+	@Override
+	public String toString() {
+		return "IncidentDTO [name=" + name + ", description=" + description + ", tags=" + tags + ", lat=" + lat
+				+ ", lon=" + lon + ", multimedia=" + multimedia + "]";
+	}
+	
+	
+
 }
