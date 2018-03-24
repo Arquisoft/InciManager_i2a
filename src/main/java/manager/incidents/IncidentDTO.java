@@ -17,31 +17,33 @@ public class IncidentDTO {
 	private double lon;
 	private String multimedia;
 	private String properties;
-	
-	public IncidentDTO() {}
 
-	public IncidentDTO(String name, String description, String tags, double lat, double lon, String multimedia, String properties) {
+	public IncidentDTO() {
+	}
+
+	public IncidentDTO(String name, String description, String tags, double lat, double lon, String multimedia,
+			String properties) {
 		this.name = name;
 		this.description = description;
 		this.tags = tags;
 		this.lat = lat;
 		this.lon = lon;
 		this.multimedia = multimedia;
-		this.properties=properties;
+		this.properties = properties;
 	}
 
 	public Incident getIncident() {
 		List<String> tagList = Arrays.asList(tags.split(","));
 		List<String> multiList = Arrays.asList(multimedia.split(","));
 		HashMap<String, Object> properties = new HashMap<String, Object>();
-		if(this.properties!=null) {
+		if (this.properties != null) {
 			List<String> propList = Arrays.asList(this.properties.split(","));
 			for (String p : propList) {
 				List<String> ar = Arrays.asList(p.split(":"));
 				properties.put(ar.get(0), ar.get(1));
 			}
 		}
-		return new Incident(name, description, new Agent(), tagList, new LatLng(lat, lon), InciState.OPEN, properties,
+		return new Incident(name, description, "", tagList, new LatLng(lat, lon), InciState.OPEN, properties,
 				multiList);
 	}
 

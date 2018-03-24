@@ -117,8 +117,7 @@ public class UserTest {
 
 	@Test
 	public void toStringTest() {
-		String output = "{name=\'Marcos\',location=\'Oviedo\',email=\'User1@hola.com\',id=\'10\',kind=\'PERSON\'"
-				+ ",kindCode=\'1\'}";
+		String output = "{name='Marcos',location='Oviedo',email='User1@hola.com',id='10',kind='Person',kindCode='1'}";
 		Assert.assertEquals(output, marcos.toString());
 	}
 
