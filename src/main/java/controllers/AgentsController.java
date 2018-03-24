@@ -33,7 +33,7 @@ public class AgentsController {
 
 	// The first page shown will be login.html.
 	@GetMapping(value = "/")
-	public String getParticipantInfo(Model model) {
+	public String getParticipantInfo(Model model, HttpSession session) {
 		UserLoginData data = new UserLoginData();
 		model.addAttribute("userinfo", data);
 		return "login";
@@ -66,7 +66,7 @@ public class AgentsController {
 	}
 
 	@RequestMapping(value = "/passMenu", method = RequestMethod.GET)
-	public String showMenu(Model model) {
+	public String showMenu(Model model, HttpSession session) {
 		// Just in case there must be more processing.
 		return "changePassword";
 	}
@@ -86,7 +86,7 @@ public class AgentsController {
 	}
 	
 	@RequestMapping(value = "/incidentMenu")
-	public String showIncidenceMenu(Model model) {
+	public String showIncidenceMenu(Model model, HttpSession session) {
 		return "incident/add";
 	}
 }
