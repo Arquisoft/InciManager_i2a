@@ -4,6 +4,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -42,11 +43,14 @@ public class AgentsController {
 	// form (clicking in the "Enter" button).
 	@RequestMapping(value = "/userForm", method = RequestMethod.POST)
 	public String showInfo(Model model, @ModelAttribute UserLoginData data,
-			HttpSession session) {
+			HttpSession session, BindingResult result) {
 		Agent user = part.getAgent(data.getLogin(), data.getPassword(),
 				data.getKind());
 		if (user == null) {
-			throw new UserNotFoundException();
+			//UserLoginData data = new UserLoginData();
+			model.addAttribute("userinfo", data);
+			model.addAttribute("error",true);
+			return "login";
 		} else {
 			UserInfoAdapter adapter = new UserInfoAdapter(user);
 			UserInfo info = adapter.userToInfo();
