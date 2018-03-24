@@ -1,7 +1,7 @@
 package domain;
 
 public enum AgentKind {
-	Person,
+	PERSON,
 	ENTITY,
 	SENSOR
 }

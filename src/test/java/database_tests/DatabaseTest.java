@@ -47,11 +47,11 @@ public class DatabaseTest {
 	@Before
 	public void setUp() {
 		testedUser = new Agent("Luis", "10N20E", "LGracia@gmail.com", "Luis123",
-				"100", AgentKind.Person, 1);
+				"100", AgentKind.PERSON, 1);
 		repo.insert(testedUser);
 
 		testedUser2 = new Agent("Maria", "20N20E", "asd", "pass14753", "321",
-				AgentKind.Person, 1);
+				AgentKind.PERSON, 1);
 		repo.insert(testedUser2);
 	}
 
