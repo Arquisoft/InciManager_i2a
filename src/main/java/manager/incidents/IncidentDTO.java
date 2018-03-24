@@ -1,9 +1,10 @@
 
 package manager.incidents;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import domain.Agent;
 
@@ -15,23 +16,33 @@ public class IncidentDTO {
 	private double lat;
 	private double lon;
 	private String multimedia;
+	private String properties;
+	
+	public IncidentDTO() {}
 
-	public IncidentDTO() {
-	}
-
-	public IncidentDTO(String name, String description, String tags, double lat, double lon, String multimedia) {
+	public IncidentDTO(String name, String description, String tags, double lat, double lon, String multimedia, String properties) {
 		this.name = name;
 		this.description = description;
 		this.tags = tags;
 		this.lat = lat;
 		this.lon = lon;
 		this.multimedia = multimedia;
+		this.properties=properties;
 	}
-	
+
 	public Incident getIncident() {
 		List<String> tagList = Arrays.asList(tags.split(","));
 		List<String> multiList = Arrays.asList(multimedia.split(","));
-		return new Incident(name, description, new Agent(), tagList, new LatLng(lat,lon), InciState.OPEN, null, multiList);
+		HashMap<String, Object> properties = new HashMap<String, Object>();
+		if(this.properties!=null) {
+			List<String> propList = Arrays.asList(this.properties.split(","));
+			for (String p : propList) {
+				List<String> ar = Arrays.asList(p.split(":"));
+				properties.put(ar.get(0), ar.get(1));
+			}
+		}
+		return new Incident(name, description, new Agent(), tagList, new LatLng(lat, lon), InciState.OPEN, properties,
+				multiList);
 	}
 
 	public String getName() {
@@ -85,9 +96,15 @@ public class IncidentDTO {
 	@Override
 	public String toString() {
 		return "IncidentDTO [name=" + name + ", description=" + description + ", tags=" + tags + ", lat=" + lat
-				+ ", lon=" + lon + ", multimedia=" + multimedia + "]";
+				+ ", lon=" + lon + ", multimedia=" + multimedia + ", properties=" + properties + "]";
 	}
-	
-	
+
+	public String getProperties() {
+		return properties;
+	}
+
+	public void setProperties(String properties) {
+		this.properties = properties;
+	}
 
 }

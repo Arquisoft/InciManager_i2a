@@ -16,11 +16,13 @@ public class IncidentDTOTests {
 
 	private IncidentDTO i1;
 	private IncidentDTO i2;
-
+	private IncidentDTO i3;
+	
 	@Before
 	public void setUp() {
-		i1 = new IncidentDTO("i1", "System failure", "failure,proof", 20.2, 17.2, "");
-		i2 = new IncidentDTO("i2", "Overheated system", "failure,heat,temperature", 20.2, 17.2, "heat.jpg");
+		i1 = new IncidentDTO("i1", "System failure", "failure,proof", 20.2, 17.2, "","");
+		i2 = new IncidentDTO("i2", "Overheated system", "failure,heat,temperature", 20.2, 17.2, "heat.jpg","operator:Bombero,temperature:70");
+		i3 = new IncidentDTO();
 	}
 
 	@Test
@@ -55,22 +57,24 @@ public class IncidentDTOTests {
 		assertEquals(inci.getTags(), tags);
 		assertEquals(inci.getName(), "i2");
 		assertTrue(inci.getLocation().getLng() == 17.2);
+		assertEquals(inci.getProperties().get("operator"),"Bombero");
 	}
 
 	@Test
-	public void testTagsAndMultimedia() {
+	public void testTagsAndMultimediaAndProperties() {
 		assertEquals(i1.getTags(), "failure,proof");
-		i2.setTags("fail");
-		assertEquals(i2.getTags(), "fail");
+		i3.setTags("fail");
+		assertEquals(i3.getTags(), "fail");
 		assertEquals(i2.getMultimedia(), "heat.jpg");
 		i2.setMultimedia("");
 		assertEquals(i2.getMultimedia(), "");
-		System.out.println(i1.toString());
+		i2.setProperties("operator:Bombero,temperature:40");
+		assertEquals(i2.getProperties(), "operator:Bombero,temperature:40");
 	}
 
 	@Test
 	public void testToString() {
-		String result = "IncidentDTO [name=i1, description=System failure, tags=failure,proof, lat=20.2, lon=17.2, multimedia=]";
+		String result = "IncidentDTO [name=i1, description=System failure, tags=failure,proof, lat=20.2, lon=17.2, multimedia=, properties=]";
 		assertEquals(i1.toString(), result);
 	}
 

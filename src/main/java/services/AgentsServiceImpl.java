@@ -1,11 +1,10 @@
-package services;
+	package services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dbmanagement.Database;
 import domain.Agent;
-import domain.AgentKind;
 import util.JasyptEncryptor;
 
 /**
@@ -38,7 +37,7 @@ public class AgentsServiceImpl implements AgentsService {
     }
 
 	@Override
-	public Agent getAgent(String name, String password, AgentKind kind) {
+	public Agent getAgent(String name, String password, String kind) {
 		Agent user = dat.getAgent(name);
         if(user != null && encryptor.checkPassword(password, user.getPassword()))
             return user;

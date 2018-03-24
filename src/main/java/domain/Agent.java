@@ -22,7 +22,7 @@ public class Agent {
 	private String email;
 	private String password;
 	private String userId;
-	private AgentKind kind;
+	private String kind;
 	private int kindCode;
 
 	public Agent() {
@@ -35,7 +35,7 @@ public class Agent {
 		this.password = encryptPass(password);
 	}
 
-	public Agent(String name, String location, String email, String password, String userId, AgentKind kind,
+	public Agent(String name, String location, String email, String password, String userId, String kind,
 			int kindCode) {
 		this(name, email, password);
 		this.location = location;
@@ -111,11 +111,11 @@ public class Agent {
 		this.location = location;
 	}
 
-	public AgentKind getKind() {
+	public String getKind() {
 		return kind;
 	}
 
-	public void setKind(AgentKind kind) {
+	public void setKind(String kind) {
 		this.kind = kind;
 	}
 

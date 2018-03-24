@@ -5,7 +5,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import domain.Agent;
-import domain.AgentKind;
 import util.JasyptEncryptor;
 
 /**
@@ -20,11 +19,11 @@ public class UserTest {
 	@Before
 	public void setUp() {
 		marcos = new Agent("Marcos", "Oviedo", "User1@hola.com", "user1Password",
-				"10", AgentKind.PERSON, 1);
+				"10", "Person", 1);
 		alba = new Agent("Alba", "Gijon", "User2@hola.com", "user2Password",
-				"11", AgentKind.PERSON, 1);
+				"11", "Person", 1);
 		javier = new Agent("Javier", "Aviles", "User3@hola.com", "user3Password",
-				"12", AgentKind.PERSON, 1);
+				"12", "Person", 1);
 	}
 
 	@Test
@@ -55,12 +54,12 @@ public class UserTest {
 
 	@Test
 	public void kindTest() {
-		Assert.assertEquals(AgentKind.PERSON.toString(), marcos.getKind().toString());
-		Assert.assertEquals(AgentKind.PERSON.toString(), alba.getKind().toString());
-		Assert.assertEquals(AgentKind.PERSON.toString(), javier.getKind().toString());
+		Assert.assertEquals("Person", marcos.getKind().toString());
+		Assert.assertEquals("Person", alba.getKind().toString());
+		Assert.assertEquals("Person", javier.getKind().toString());
 
-		marcos.setKind(AgentKind.SENSOR);
-		Assert.assertEquals(AgentKind.SENSOR.toString(), marcos.getKind().toString());
+		marcos.setKind("Sensor");
+		Assert.assertEquals("Sensor", marcos.getKind().toString());
 	}
 
 	@Test

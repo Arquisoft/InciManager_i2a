@@ -29,7 +29,6 @@ import controllers.UserNotFoundException;
  */
 import dbmanagement.AgentsRepository;
 import domain.Agent;
-import domain.AgentKind;
 import main.Application;
 
 @SpringBootTest(classes = { Application.class })
@@ -67,17 +66,17 @@ public class AgentsDataControllerTest {
 		// Setting up users
 		plainPassword = "pass14753";
 		javier = new Agent("Javier", "Aviles", "User3@hola.com", plainPassword,
-				"12", AgentKind.PERSON, 1);
+				"12", "Person", 1);
 		repo.insert(javier);
 
 		plainPassword = "pass14753";
 		marcos = new Agent("Marcos", "Oviedo", "User1@hola.com", plainPassword,
-				"10", AgentKind.PERSON, 1);
+				"10", "Person", 1);
 		repo.insert(marcos);
 
 		plainPassword = "pass14753";
 		alba = new Agent("Alba", "Gijon", "User2@hola.com", plainPassword, "11",
-				AgentKind.PERSON, 1);
+				"Person", 1);
 		repo.insert(alba);
 	}
 
@@ -232,7 +231,7 @@ public class AgentsDataControllerTest {
 	@Test
 	public void testForNotFound() throws Exception {
 		String payload = String.format(QUERY, "Nothing", "Not really",
-				AgentKind.PERSON);
+				"Person");
 		MockHttpServletRequestBuilder request = post("/user").session(session)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(payload.getBytes());

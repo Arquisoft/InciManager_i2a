@@ -11,22 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.fasterxml.jackson.core.JsonFactory;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.SerializerProvider;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import dbmanagement.AgentsRepository;
-import dbmanagement.Database;
 import domain.Agent;
-import domain.AgentKind;
 import manager.incidents.InciValidator;
 import manager.incidents.Incident;
 import manager.incidents.IncidentDTO;
 import manager.producers.KafkaProducer;
-import services.AgentsService;
-import services.AgentsServiceImpl;
-import util.IncidentToJson;
 
 @Controller
 public class IncidentController {
@@ -56,16 +48,41 @@ public class IncidentController {
 	public String send(Model model, @ModelAttribute IncidentDTO incident, HttpSession session) throws IOException {
 		Agent agentSession = (Agent) session.getAttribute("user");
 		Agent agent = agentsRepository.findByName(agentSession.getUsername());
-		if (agentSession.getUsername().equals(agent.getUsername()) && agentSession.getPassword().equals(agent.getPassword())) {
+		if (agentSession.getUsername().equals(agent.getUsername())
+				&& agentSession.getPassword().equals(agent.getPassword())) {
 			Writer writer = new StringWriter();
 			Incident incidentFinal = incident.getIncident();
 			incidentFinal.setAgent(agent);
-			// pendientes las properties
+			if(agent.getKind().equals("Sensor")) {
+				session.setAttribute("incident", incidentFinal);
+				return "/incident/sensorAdd";
+			}
+			else {
+				System.out.println(incidentFinal.toString());
+				//jsonGen=jsonFactory.createJsonGenerator(writer); //no sé si funciona
+				//incidentJson.serialize(incidentFinal, jsonGen, serial);
+				kafkaProducer.send("incident",incidentFinal.toString() );
+			}
+		}
+		return "data";
+	}
+	
+	@RequestMapping("/incident/sensorAdd")
+	public String sensorAdd() {
+		return "/incident/sensorAdd";
+	}
+	
+	@RequestMapping("/sensorAdd")
+	public String sensorAdd(Model model, @RequestParam String emergency, HttpSession session) throws IOException {
+		Incident i = (Incident) session.getAttribute("incident");
+		if(!emergency.equals("false")){
+			i.setEmergency(true);
+			System.out.println(i.toString());
+			kafkaProducer.send("incident",i.toString() );
+			// Writer writer = new StringWriter();
 			// jsonGen=jsonFactory.createJsonGenerator(writer); //no sé si funciona
-			// if (inciValidator.isEmergency(incidentFinal)) {
 			// incidentJson.serialize(incidentFinal, jsonGen, serial);
 			// kafkaProducer.send("incident", writer.toString());
-			// }
 		}
 		return "data";
 	}

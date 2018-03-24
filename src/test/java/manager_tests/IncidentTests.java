@@ -21,6 +21,7 @@ public class IncidentTests {
 
 	private Incident i1;
 	private Incident i2;
+	private Incident i3;
 
 	@Before
 	public void setUp() {
@@ -28,6 +29,7 @@ public class IncidentTests {
 				new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>());
 		i2 = new Incident("i2", "Overheated system", new Agent("alum", "alumnossi", "seguridad"),
 				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>());
+		i3 = new Incident();
 	}
 
 	@Test
@@ -63,19 +65,24 @@ public class IncidentTests {
 
 	@Test
 	public void testTagsAndMultimedia() {
+		i3.getId();
+		Incident i4 = new Incident();
+		assertTrue(i3.equals(i4));
 		assertTrue(i1.getTags().isEmpty());
 		List<String> tags = new ArrayList<String>();
 		tags.add("Park");
 		tags.add("Skyrim");
 		i2.setTags(tags);
-		assertTrue(i2.getTags().size() == 2);
-		assertEquals(i2.getTags().get(1), "Skyrim");
+		i2.addTag("Shared");
+		assertTrue(i2.getTags().size() == 3);
+		assertEquals(i2.getTags().get(2), "Shared");
 		assertTrue(i1.getMultimedia().isEmpty());
 		List<String> multi = new ArrayList<String>();
 		multi.add("Park");
 		multi.add("Skyrim");
 		i2.setMultimedia(multi);
-		assertTrue(i2.getMultimedia().size() == 2);
+		i2.addFile("Shared");
+		assertTrue(i2.getMultimedia().size() == 3);
 		assertEquals(i2.getMultimedia().get(1), "Skyrim");
 	}
 
@@ -101,9 +108,13 @@ public class IncidentTests {
 
 	@Test
 	public void testToString() {
+		Map<String, Object> properties = new HashMap<String, Object>();
+		properties.put("temperature", 20.1);
+		properties.put("fire", false);
+		i1.setProperties(properties);
 		String result = "{name='i1',description='System failure',"
-				+ "agent='null',tags='[]',location='GeoCords [lat=20.2, lng=17.2]',state='OPEN',multimedia='[]'}";
-		assertEquals(i1.toString(),result);
+				+ "agent='null',tags='[]',location='GeoCords [lat=20.2, lng=17.2]',state='OPEN',multimedia='[]',properties='temperature:20.1 fire:false '}";
+		assertEquals(i1.toString(), result);
 	}
 
 }

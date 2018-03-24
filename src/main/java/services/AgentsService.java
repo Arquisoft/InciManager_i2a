@@ -1,7 +1,6 @@
 package services;
 
 import domain.Agent;
-import domain.AgentKind;
 
 /**
  * Created by Nicolás on 14/02/2017. Façade for the business layer
@@ -21,7 +20,7 @@ public interface AgentsService {
 	 * @return Either the proper user, if the user exists and the password
 	 *         matches. Null otherwise
 	 */
-	Agent getAgent(String name, String password, AgentKind kind);
+	Agent getAgent(String name, String password, String kind);
 
 	/**
 	 * Updates the password for the given user

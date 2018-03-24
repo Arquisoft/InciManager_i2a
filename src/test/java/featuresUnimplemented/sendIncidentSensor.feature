@@ -9,5 +9,5 @@ Feature: A sensor wants to send an incident to the Dashboard
     And I access to /incident/add
     And I send an incident with name "I1" and description "" and tags "" and lattitude 0.0 and longitude 0.0 and multimedia ""
     And I access to /incident/sensorAdd
-    And I send the incident with emergency "true" and properties "temperature:50"
+    And I send the incident with emergency "true"
     Then I get a confirmation of the sending operation

@@ -9,10 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import dbmanagement.Database;
 import dbmanagement.AgentsRepository;
+import dbmanagement.Database;
 import domain.Agent;
-import domain.AgentKind;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import main.Application;
@@ -47,11 +46,11 @@ public class DatabaseTest {
 	@Before
 	public void setUp() {
 		testedUser = new Agent("Luis", "10N20E", "LGracia@gmail.com", "Luis123",
-				"100", AgentKind.PERSON, 1);
+				"100", "Person", 1);
 		repo.insert(testedUser);
 
 		testedUser2 = new Agent("Maria", "20N20E", "asd", "pass14753", "321",
-				AgentKind.PERSON, 1);
+				"Person", 1);
 		repo.insert(testedUser2);
 	}
 

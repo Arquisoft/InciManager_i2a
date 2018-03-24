@@ -12,7 +12,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import domain.Agent;
-import domain.AgentKind;
 import manager.incidents.InciState;
 import manager.incidents.Incident;
 import manager.incidents.LatLng;
@@ -37,7 +36,7 @@ public class JsonToIncident extends JsonDeserializer<Incident>{
 		JsonNode jsonAgent = json.get("agent");
 		agent.setUsername(jsonAgent.get("username").textValue());
 		agent.setPassword(jsonAgent.get("password").textValue());
-		agent.setKind(AgentKind.valueOf(jsonAgent.get("kind").textValue()));
+		agent.setKind(jsonAgent.get("kind").textValue());
 		incident.setAgent(agent);
 		
 		//Tags
