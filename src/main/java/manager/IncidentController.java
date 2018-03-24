@@ -46,7 +46,7 @@ public class IncidentController {
 	// @Autowired
 	// private JsonFactory jsonFactory;
 
-	@RequestMapping("/")
+	@RequestMapping("/incident/add")
 	public String landing(Model model) {
 		model.addAttribute("incident", new IncidentDTO());
 		return "/incident/add";

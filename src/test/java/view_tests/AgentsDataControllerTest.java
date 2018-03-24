@@ -67,17 +67,17 @@ public class AgentsDataControllerTest {
 		// Setting up users
 		plainPassword = "pass14753";
 		javier = new Agent("Javier", "Aviles", "User3@hola.com", plainPassword,
-				"12", AgentKind.Person, 1);
+				"12", AgentKind.PERSON, 1);
 		repo.insert(javier);
 
 		plainPassword = "pass14753";
 		marcos = new Agent("Marcos", "Oviedo", "User1@hola.com", plainPassword,
-				"10", AgentKind.Person, 1);
+				"10", AgentKind.PERSON, 1);
 		repo.insert(marcos);
 
 		plainPassword = "pass14753";
 		alba = new Agent("Alba", "Gijon", "User2@hola.com", plainPassword, "11",
-				AgentKind.Person, 1);
+				AgentKind.PERSON, 1);
 		repo.insert(alba);
 	}
 
@@ -232,7 +232,7 @@ public class AgentsDataControllerTest {
 	@Test
 	public void testForNotFound() throws Exception {
 		String payload = String.format(QUERY, "Nothing", "Not really",
-				AgentKind.Person);
+				AgentKind.PERSON);
 		MockHttpServletRequestBuilder request = post("/user").session(session)
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(payload.getBytes());

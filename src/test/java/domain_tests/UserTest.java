@@ -20,11 +20,11 @@ public class UserTest {
 	@Before
 	public void setUp() {
 		marcos = new Agent("Marcos", "Oviedo", "User1@hola.com", "user1Password",
-				"10", AgentKind.Person, 1);
+				"10", AgentKind.PERSON, 1);
 		alba = new Agent("Alba", "Gijon", "User2@hola.com", "user2Password",
-				"11", AgentKind.Person, 1);
+				"11", AgentKind.PERSON, 1);
 		javier = new Agent("Javier", "Aviles", "User3@hola.com", "user3Password",
-				"12", AgentKind.Person, 1);
+				"12", AgentKind.PERSON, 1);
 	}
 
 	@Test
@@ -55,9 +55,9 @@ public class UserTest {
 
 	@Test
 	public void kindTest() {
-		Assert.assertEquals(AgentKind.Person.toString(), marcos.getKind().toString());
-		Assert.assertEquals(AgentKind.Person.toString(), alba.getKind().toString());
-		Assert.assertEquals(AgentKind.Person.toString(), javier.getKind().toString());
+		Assert.assertEquals(AgentKind.PERSON.toString(), marcos.getKind().toString());
+		Assert.assertEquals(AgentKind.PERSON.toString(), alba.getKind().toString());
+		Assert.assertEquals(AgentKind.PERSON.toString(), javier.getKind().toString());
 
 		marcos.setKind(AgentKind.SENSOR);
 		Assert.assertEquals(AgentKind.SENSOR.toString(), marcos.getKind().toString());
@@ -118,7 +118,7 @@ public class UserTest {
 
 	@Test
 	public void toStringTest() {
-		String output = "{name=\'Marcos\',location=\'Oviedo\',email=\'User1@hola.com\',id=\'10\',kind=\'Person\'"
+		String output = "{name=\'Marcos\',location=\'Oviedo\',email=\'User1@hola.com\',id=\'10\',kind=\'PERSON\'"
 				+ ",kindCode=\'1\'}";
 		Assert.assertEquals(output, marcos.toString());
 	}
