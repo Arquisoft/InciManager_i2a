@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head :: head" />
+<body>
+	
+	<div class="container">
+		<h2>Submitted incidents</h2>
+
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Description</th>
+						<th>State</th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="incid : ${incidList}">
+						<td th:text="${incid.name}"></td>
+						<td th:text="${incid.description}"></td>
+						<td th:text="${incid.state}"></td>
+						
+						<td><a th:href="${'/incident/details/' + incid.id.toString()}">detalles</a></td>
+						
+					</tr>
+				</tbody>
+			</table>
+		</div>
+ 	</div>
+	
+</body>
+</html>

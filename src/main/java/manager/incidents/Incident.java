@@ -1,25 +1,30 @@
 package manager.incidents;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.bson.types.ObjectId;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import domain.Agent;
+import services.AgentsService;
 
 @Document(collection = "incidents")
 public class Incident {
+	
+	@Autowired
+	private AgentsService agentServ;
 	
 	@Id
 	private ObjectId id;
 
 	private String name;
 	private String description;
-	private Agent agent;
+
+	private String agentId;
 	private List<String> tags;
 	private LatLng location;
 	private InciState state;
@@ -33,23 +38,47 @@ public class Incident {
 	
 	
 	
-	public Incident(String name, String description, Agent agent, List<String> tags, LatLng location,
+	public Incident(String name, String description, String agentId, List<String> tags, LatLng location,
 			InciState state, List<String> multimedia) {
 		super();
 		this.name = name;
 		this.description = description;
-		this.agent=agent;
+		this.agentId=agentId;
 		this.tags = tags;
 		this.location = location;
 		this.state = state;
 		this.multimedia=multimedia;
 	}
 	
-	public Incident(String name, String description, Agent agent, List<String> tags, LatLng location,
+	public Incident(String name, String description, String agentId, List<String> tags, LatLng location,
 			InciState state, HashMap<String,Object> properties,List<String> multimedia) {
 		this.name = name;
 		this.description = description;
-		this.agent=agent;
+		this.agentId=agentId;
+		this.tags = tags;
+		this.location = location;
+		this.state = state;
+		this.properties=properties;
+		this.multimedia=multimedia;
+	}
+	
+	public Incident(String name, String description, Agent agentId, List<String> tags, LatLng location,
+			InciState state, List<String> multimedia) {
+		super();
+		this.name = name;
+		this.description = description;
+		this.agentId=agentId.getUserId();
+		this.tags = tags;
+		this.location = location;
+		this.state = state;
+		this.multimedia=multimedia;
+	}
+	
+	public Incident(String name, String description, Agent agentId, List<String> tags, LatLng location,
+			InciState state, HashMap<String,Object> properties,List<String> multimedia) {
+		this.name = name;
+		this.description = description;
+		this.agentId=agentId.getUserId();
 		this.tags = tags;
 		this.location = location;
 		this.state = state;
@@ -61,6 +90,7 @@ public class Incident {
 
 	@Override
 	public String toString() {
+		/**
 		if(agent.getKind()!=null){
 			if(agent.getKind().equals("SENSOR")){
 				StringBuilder sb = new StringBuilder();
@@ -73,10 +103,11 @@ public class Incident {
 			    sb.append("'");
 			}
 		}
+		**/
 		return "{"
 				+ "name='" + name+"'" 
 				+ ",description='" + description+"'"  
-				+ ",agent='" + agent.getUserId() +"'" 
+				+ ",agent='" + agentId +"'" 
 				+ ",tags='" + tags +"'" 
 				+ ",location='" + location.toString() +"'"
 				+ ",state='" + state + "'"
@@ -137,16 +168,23 @@ public class Incident {
 		this.description = description;
 	}
 
-	public Agent getAgent() {
-		return agent;
+	public String getAgentId() {
+		return agentId;
 	}
 
+
+	public void setAgentId(String agentId) {
+		this.agentId = agentId;
+	}
+
+	public Agent getAgent() {
+		return agentServ.getAgentById(agentId);
+	}
 
 	public void setAgent(Agent agent) {
-		this.agent = agent;
+		this.agentId = agent.getUserId();
 	}
-
-
+	
 	public List<String> getTags() {
 		return tags;
 	}

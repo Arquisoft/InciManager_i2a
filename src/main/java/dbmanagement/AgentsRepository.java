@@ -15,5 +15,7 @@ import org.springframework.stereotype.Repository;
 public interface AgentsRepository extends MongoRepository<Agent, ObjectId>{
 
 	@Query("{ 'name' : ?0 }")
-	Agent findByName(String name);
+	public Agent findByName(String name);
+
+	public Agent findById(ObjectId obid);
 }

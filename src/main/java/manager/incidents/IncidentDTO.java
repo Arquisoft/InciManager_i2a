@@ -31,7 +31,7 @@ public class IncidentDTO {
 	public Incident getIncident() {
 		List<String> tagList = Arrays.asList(tags.split(","));
 		List<String> multiList = Arrays.asList(multimedia.split(","));
-		return new Incident(name, description, new Agent(), tagList, new LatLng(lat,lon), InciState.OPEN, null, multiList);
+		return new Incident(name, description, "", tagList, new LatLng(lat,lon), InciState.OPEN, null, multiList);
 	}
 
 	public String getName() {

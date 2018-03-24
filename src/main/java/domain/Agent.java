@@ -24,11 +24,13 @@ public class Agent {
 	private String userId;
 	private AgentKind kind;
 	private int kindCode;
+	
 
 	public Agent() {
 
 	}
 
+	
 	public Agent(String name, String email, String password) {
 		this.name = name;
 		this.email = email;

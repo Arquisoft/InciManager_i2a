@@ -34,5 +34,9 @@ public interface AgentsService {
 	void updateInfo(Agent user, String newPassword);
 	
 	Agent getAgent(String name, String password);
+	
+	public Agent getAgentByName(String name);
+	
+	public Agent getAgentById(String id);
 
 }

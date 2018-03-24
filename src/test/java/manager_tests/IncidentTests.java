@@ -42,15 +42,7 @@ public class IncidentTests {
 		assertEquals(i2.getDescription(), "Sample");
 	}
 
-	@Test
-	public void testAgentEmail() {
-		assertEquals(i1.getAgent().getEmail(), "alumnossi");
-		assertEquals(i2.getAgent().getEmail(), "alumnossi");
-		i1.getAgent().setEmail("i4");
-		assertEquals(i1.getAgent().getEmail(), "i4");
-		i2.setAgent(new Agent("alum", "linkin", "seguridad"));
-		assertEquals(i2.getAgent().getEmail(), "linkin");
-	}
+	
 
 	@Test
 	public void testLocation() {
