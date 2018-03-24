@@ -30,19 +30,14 @@ You will need to run Apache Kafka and Zookeeper to start the application. You sh
  
  > bin\windows\kafka-server-start.bat config/server.properties
 	
-### **3. Run the project**
-	Download the project and go to its directory, open there a command prompt and execute:
-		> mvn spring-boot:run
-	Now the application is running if all it's correct.
-	
-### **4. Run the database**
+### **3. Run the database**
 	Open command prompt in the bin folder where you have MongoDB, the path will be similar to this
 		> ~\MongoDB\Server\3.6\bin
 	Execute:
 		> mongod.exe --dbpath <your database path>
-	Replace <your database path> with the path to the directory where you want to create your database.	
+	Replace <your database path> with the path to the directory where you want to create your database.
 	
-### **5. Insert JSON documents in MongoDB database**
+### **4. Insert JSON documents in MongoDB database**
 	Open command prompt int the bin folder where you have MongoDB, the path will be similar to this
 		> ~\MongoDB\Server\3.6\bin
 	Execute the following command:
@@ -54,13 +49,18 @@ You will need to run Apache Kafka and Zookeeper to start the application. You sh
 	
 	Notes: MongoDB stores documents in collections. Collections are analogous to tables in relational databases.
 	
+### **5. Run the project**
+	Download the project and go to its directory, open there a command prompt and execute:
+		> mvn spring-boot:run
+	Now the application is running if all it's correct.
+	
 ### **6. Start using the application**
 	Open http://localhost:8080/ on you navigator and login to use the application. To test it, you can follow
 	the steps described in the next point.
 
 ### **7. Test the application**
-To run the tests just use `mvn test`. No data in the database is needed to run them. But if you want to test the
-user interface manually you'll have to introduce this document:
+	To run the tests just use `mvn test`. No data in the database is needed to run them. But if you want to test the
+	user interface manually you'll have to introduce this document:
 
 ```json
 {
