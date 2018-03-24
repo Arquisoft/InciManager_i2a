@@ -20,12 +20,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="incid : ${incidList}">
+					<tr th:if="${not #lists.isEmpty(incidList)}" th:each="incid : ${incidList}">
 						<td th:text="${incid.name}"></td>
 						<td th:text="${incid.description}"></td>
 						<td th:text="${incid.state}"></td>
 						
-						<td><a th:href="${'/incident/details/' + incid.id.toString()}">detalles</a></td>
+						<td><a th:href="@{'/incident/details/' + ${incid.name}}">detalles</a></td>
 						
 					</tr>
 				</tbody>

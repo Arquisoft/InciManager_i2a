@@ -9,5 +9,5 @@ public interface IncidentService {
 	
 	public void saveIncident(Incident incident);
 
-	public List<Incident> getIncidentsByAgentId(String agent);
+	public List<Incident> getIncidentsByAgentUsername(String agent);
 }

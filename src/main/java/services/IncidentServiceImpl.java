@@ -22,7 +22,7 @@ public class IncidentServiceImpl implements IncidentService{
 	}
 
 	@Override
-	public List<Incident> getIncidentsByAgentId(String agent) {
+	public List<Incident> getIncidentsByAgentUsername(String agent) {
 		List<Incident> incidents = new ArrayList<Incident>();
 		incidents = incidRep.findAllByAgentId(agent);
 		return incidents;

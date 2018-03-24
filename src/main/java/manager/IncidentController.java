@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import domain.Agent;
+import domain.UserInfo;
+import domain.UserInfoAdapter;
 import manager.incidents.InciValidator;
 import manager.incidents.Incident;
 import manager.incidents.IncidentDTO;
@@ -23,16 +26,15 @@ import manager.producers.KafkaProducer;
 import services.AgentsService;
 import services.IncidentService;
 
-
 @Controller
 public class IncidentController {
 
 	@Autowired
-	private AgentsService agentsServ;
+	private AgentsService agentsService;
 
 	@Autowired
-	private IncidentService incidentServ;
-	
+	private IncidentService incidentService;
+
 	@Autowired
 	private KafkaProducer kafkaProducer;
 	@Autowired
@@ -47,7 +49,7 @@ public class IncidentController {
 	// private JsonFactory jsonFactory;
 
 	@RequestMapping("/incident/add")
-	public String landing(Model model) {
+	public String landing(Model model, HttpSession session) {
 		model.addAttribute("incident", new IncidentDTO());
 		return "/incident/add";
 	}
@@ -55,39 +57,47 @@ public class IncidentController {
 	@RequestMapping("/send")
 	public String send(Model model, @ModelAttribute IncidentDTO incident, HttpSession session) throws IOException {
 		Agent agentSession = (Agent) session.getAttribute("user");
-		Agent agent = agentsServ.getAgentByName(agentSession.getUsername());
-		if (agentSession.getUsername().equals(agent.getUsername()) && agentSession.getPassword().equals(agent.getPassword())) {
+		Agent agent = agentsService.getAgentByName(agentSession.getUsername());
+
+		if (agentSession.getUsername().equals(agent.getUsername())
+				&& agentSession.getPassword().equals(agent.getPassword())) {
 			Writer writer = new StringWriter();
 			Incident incidentFinal = incident.getIncident();
-			incidentFinal.setAgentId(agent.getUserId());
-			if(agent.getKind().equals("Sensor")) {
+			incidentFinal.setAgentId(agent.getUsername());
+			if (agent.getKind().equals("Sensor")) {
 				session.setAttribute("incident", incidentFinal);
 				return "/incident/sensorAdd";
-			}
-			else {
-				System.out.println(incidentFinal.toString());
-				//jsonGen=jsonFactory.createJsonGenerator(writer); //no sé si funciona
-				//incidentJson.serialize(incidentFinal, jsonGen, serial);
-				// incidentServ.saveIncident(incidentFinal);
-				kafkaProducer.send("incident",incidentFinal.toString() );
+			} else {
+				incidentService.saveIncident(incidentFinal);
+				kafkaProducer.send("incident", incidentFinal.toString());
 			}
 		}
+
+		UserInfoAdapter adapter = new UserInfoAdapter(agent);
+		UserInfo info = adapter.userToInfo();
+		model.addAttribute("name", info.getName());
+		model.addAttribute("location", info.getLocation());
+		model.addAttribute("email", info.getEmail());
+		model.addAttribute("kind", info.getKind());
+		model.addAttribute("kindCode", info.getKindCode());
+		model.addAttribute("user", agent);
+		session.setAttribute("user", agent);
+
 		return "data";
 	}
-		
-	
+
 	@RequestMapping("/incident/sensorAdd")
-	public String sensorAdd() {
+	public String sensorAdd(HttpSession session) {
 		return "/incident/sensorAdd";
 	}
-	
+
 	@RequestMapping("/sensorAdd")
 	public String sensorAdd(Model model, @RequestParam String emergency, HttpSession session) throws IOException {
 		Incident i = (Incident) session.getAttribute("incident");
-		if(!emergency.equals("false")){
+		if (!emergency.equals("false")) {
 			i.setEmergency(true);
 			System.out.println(i.toString());
-			kafkaProducer.send("incident",i.toString() );
+			kafkaProducer.send("incident", i.toString());
 			// Writer writer = new StringWriter();
 			// jsonGen=jsonFactory.createJsonGenerator(writer); //no sé si funciona
 			// incidentJson.serialize(incidentFinal, jsonGen, serial);
@@ -96,13 +106,27 @@ public class IncidentController {
 		}
 		return "data";
 	}
-	
+
 	@RequestMapping("incident/list/{name}")
-	public String listIncidents(Model model, Principal principal, @PathVariable String name) {
-		//String name = principal.getName(); 
-		Agent agent = agentsServ.getAgentByName(name);
-		model.addAttribute("incidList", incidentServ.getIncidentsByAgentId(agent.getUserId().toString()));
-		return "user/list";
+	public String listIncidents(Model model, @PathVariable String name, HttpSession session) {
+		Agent agent = (Agent) session.getAttribute("user");
+		List<Incident> incidents = incidentService
+				.getIncidentsByAgentUsername(agentsService.getAgentByName(agent.getUsername()).getUsername());
+		model.addAttribute("incidList", incidents);
+		return "incident/list";
+	}
+	
+	@RequestMapping("incident/details/{name}")
+	public String incidentDetails(Model model, @PathVariable String name, HttpSession session) {
+		Agent agent = (Agent) session.getAttribute("user");
+		List<Incident> incidents = incidentService
+				.getIncidentsByAgentUsername(agentsService.getAgentByName(agent.getUsername()).getUsername());
+		for(Incident i : incidents) {
+			if(i.getName().equals(name))
+				model.addAttribute("incident", i);
+		}
+		
+		return "incident/details";
 	}
 
 }

@@ -11,11 +11,9 @@ import domain.Agent;
 import manager.incidents.Incident;
 
 @Repository
-public interface IncidentRepository extends MongoRepository<Incident, ObjectId>{
+public interface IncidentRepository extends MongoRepository<Incident, ObjectId> {
 
-	
-
-	@Query("{ 'agentid' : ?0 }")
+	@Query("{ 'agentId' : ?0 }")
 	List<Incident> findAllByAgentId(String agentid);
-	
+
 }

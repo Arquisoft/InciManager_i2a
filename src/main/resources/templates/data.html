@@ -79,7 +79,7 @@
  </div>
   <a class="btn btn-primary glyphicon glyphicon-cog " href="/passMenu">Change password</a>
   	<a class="btn btn-primary glyphicon glyphicon-cog " href="/incident/add">Add incidence</a>
-	<a class="btn btn-primary glyphicon glyphicon-cog " href="${'/incident/list/'+name}">Submitted incidents</a>
+	<a class="btn btn-primary glyphicon glyphicon-cog " th:href="@{'/incident/list/' + ${name}}">Submitted incidents</a>
   </div>
 
 
