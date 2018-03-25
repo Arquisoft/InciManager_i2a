@@ -1,4 +1,4 @@
-package manager;
+package controllers;
 
 import java.io.IOException;
 import java.util.List;
@@ -46,7 +46,6 @@ public class IncidentController {
 	public String send(Model model, @ModelAttribute IncidentDTO incident, HttpSession session) throws IOException {
 		Agent agentSession = (Agent) session.getAttribute("user");
 		Agent agent = agentsService.getAgentByName(agentSession.getUsername());
-
 		if (agentSession.getUsername().equals(agent.getUsername())
 				&& agentSession.getPassword().equals(agent.getPassword())) {
 		//	Writer writer = new StringWriter();
