@@ -14,14 +14,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import domain.Agent;
-import domain.UserInfo;
-import domain.UserInfoAdapter;
 import manager.incidents.Incident;
 import manager.incidents.IncidentDTO;
 import manager.producers.KafkaProducer;
 import services.AgentsService;
 import services.IncidentService;
+import util.SerializerLinker;
 
 @Controller
 public class IncidentController {
@@ -34,14 +35,6 @@ public class IncidentController {
 
 	@Autowired
 	private KafkaProducer kafkaProducer;
-	// @Autowired
-	// private IncidentToJson incidentJson;
-	// @Autowired
-	// private JsonGenerator jsonGen;
-	// @Autowired
-	// private SerializerProvider serial;
-	// @Autowired
-	// private JsonFactory jsonFactory;
 
 	@RequestMapping("/incident/add")
 	public String landing(Model model, HttpSession session) {
@@ -64,20 +57,12 @@ public class IncidentController {
 				return "/incident/sensorAdd";
 			} else {
 				incidentService.saveIncident(incidentFinal);
-				kafkaProducer.send("incident", incidentFinal.toString());
+				ObjectMapper objectMapper = new ObjectMapper();
+				objectMapper.registerModule(new SerializerLinker());
+				String json = objectMapper.writeValueAsString(incidentFinal);
+				kafkaProducer.send("incident", json);
 			}
 		}
-
-		UserInfoAdapter adapter = new UserInfoAdapter(agent);
-		UserInfo info = adapter.userToInfo();
-		model.addAttribute("name", info.getName());
-		model.addAttribute("location", info.getLocation());
-		model.addAttribute("email", info.getEmail());
-		model.addAttribute("kind", info.getKind());
-		model.addAttribute("kindCode", info.getKindCode());
-		model.addAttribute("user", agent);
-		session.setAttribute("user", agent);
-
 		return "redirect:data";
 	}
 
@@ -92,11 +77,10 @@ public class IncidentController {
 		if (!emergency.equals("false")) {
 			i.setEmergency(true);
 			System.out.println(i.toString());
-			kafkaProducer.send("incident", i.toString());
-			// Writer writer = new StringWriter();
-			// jsonGen=jsonFactory.createJsonGenerator(writer); //no sé si funciona
-			// incidentJson.serialize(incidentFinal, jsonGen, serial);
-			// kafkaProducer.send("incident", writer.toString());
+			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.registerModule(new SerializerLinker());
+			String json = objectMapper.writeValueAsString(i);
+			kafkaProducer.send("incident", json);
 		}
 		incidentService.saveIncident(i);
 		return "redirect:data";

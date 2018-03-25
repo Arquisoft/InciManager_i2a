@@ -19,11 +19,7 @@ public class IncidentToJson extends JsonSerializer<Incident>{
 		jsonGenerator.writeStringField("description", incident.getDescription());
 		
 		// incident's agent
-		jsonGenerator.writeObjectFieldStart("agent");
-		jsonGenerator.writeStringField("username", incident.getAgent().getUsername());
-		jsonGenerator.writeStringField("password", incident.getAgent().getPassword());
-		jsonGenerator.writeStringField("kind", incident.getAgent().getKind().toString());
-		jsonGenerator.writeEndObject();
+		jsonGenerator.writeStringField("agentId", incident.getAgentId());
 		
 		// tags
 		jsonGenerator.writeArrayFieldStart("tags");
@@ -49,9 +45,9 @@ public class IncidentToJson extends JsonSerializer<Incident>{
 		jsonGenerator.writeEndArray();
 		
 		//properties
-		jsonGenerator.writeArrayFieldStart("properties");
-		for(String property: incident.getProperties().keySet()) {
-			jsonGenerator.writeObjectField(property, incident.getProperties().get(property));
+		jsonGenerator.writeObjectFieldStart("properties");
+		for (String key : incident.getProperties().keySet()) {
+			jsonGenerator.writeObjectField(key, incident.getProperties().get(key));
 		}
 		jsonGenerator.writeEndObject();
 		
