@@ -12,7 +12,7 @@ import cucumber.api.java.en.When;
 
 public class LoginSteps {
 	private static final Logger LOG = LoggerFactory.getLogger(Main.class);
-
+	
 	@Given("^a list of users:$")
 	public void a_list_of_users(List<User> users) throws Throwable {
 		for (User u : users) {

@@ -160,6 +160,7 @@ public class DatabaseTest {
 	public void testAgentService() {
 		Assert.assertEquals(agentServ.getAgent("Luis", "Luis123"),testedUser );
 		Assert.assertEquals(agentServ.getAgentByName("Luis"),testedUser );
+		Assert.assertNull(agentServ.getAgent("aa","aaaaaaa"));
 	}
 	
 	@Test
