@@ -18,6 +18,7 @@ import manager.incidents.LatLng;
 
 public class JsonToIncident extends JsonDeserializer<Incident>{
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Incident deserialize(JsonParser jsonParser, DeserializationContext context)
 			throws IOException, JsonProcessingException {
