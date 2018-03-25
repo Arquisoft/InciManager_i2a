@@ -11,10 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 import domain.Agent;
 import services.AgentsService;
+import util.IncidentToJson;
 
 @Document(collection = "incidents")
+@JsonSerialize(using = IncidentToJson.class)
 public class Incident {
 	
 	@Autowired
