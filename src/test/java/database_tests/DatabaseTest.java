@@ -52,15 +52,6 @@ public class DatabaseTest {
 	@Autowired
 	private Database dat;
 
-	/*
-	 * Para este test se necesita el siguiente documento en la base de datos: {
-	 * "_id" : ObjectId("5893a06ace8c8e1b79d8a9a9"), "_class" : "Model.User",
-	 * "firstName" : "Maria", "location" : "20N20E", "password" :
-	 * "9gvHm9TI57Z9ZW8/tTu9Nk10NDZayLIgKcFT8WdCVXPeY5gF57AFjS/l4nKNY1Jq",
-	 * "dateOfBirth" : ISODate("1982-12-27T23:00:00.000Z"), "address" : "Hallo",
-	 * "nationality" : "Core", "userId" : "321", "email" : "asd", "kind":
-	 * "Person", "kindCode" :1 } }
-	 */
 	@Before
 	public void setUp() {
 		a = new Agent("agent1", "pass-01", "Person");
