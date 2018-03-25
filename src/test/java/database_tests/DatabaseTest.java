@@ -23,6 +23,7 @@ import main.Application;
 import manager.incidents.InciState;
 import manager.incidents.Incident;
 import manager.incidents.LatLng;
+import manager.producers.KafkaProducer;
 import services.AgentsService;
 import services.IncidentService;
 import util.JasyptEncryptor;
@@ -42,6 +43,8 @@ public class DatabaseTest {
 	private AgentsService agentServ;
 	@Autowired
 	private IncidentService inciServ;
+	@Autowired
+	private KafkaProducer kafka;
 
 	// User to use as reference for test
 	private Agent testedUser;
@@ -173,5 +176,16 @@ public class DatabaseTest {
 		inciServ.saveIncident(i2);
 		Assert.assertEquals(inciServ.getIncidentsByAgentId("id0").size(),1);
 		inciRepo.delete(i2);
+	}
+	
+	@Test
+	public void kafkaTest() {
+		boolean isOkay = true;
+		try {
+			kafka.send("incidents", "Foo testing");
+		}catch(Exception e) {
+			isOkay=false;
+		}
+		Assert.assertTrue(isOkay);
 	}
 }
