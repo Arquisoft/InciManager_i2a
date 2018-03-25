@@ -11,18 +11,11 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import dbmanagement.Database;
 import domain.Agent;
-import main.Application;
 import manager.incidents.InciState;
 import manager.incidents.Incident;
 import manager.incidents.LatLng;
-import services.AgentsService;
 
 public class IncidentTests {
 
