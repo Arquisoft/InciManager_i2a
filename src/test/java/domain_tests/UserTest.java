@@ -28,6 +28,9 @@ public class UserTest {
 
 	@Test
 	public void firstNameTest() {
+		
+		
+		
 		Assert.assertEquals("Marcos", marcos.getUsername());
 		Assert.assertEquals("Alba", alba.getUsername());
 		Assert.assertEquals("Javier", javier.getUsername());

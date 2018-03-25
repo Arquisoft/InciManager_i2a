@@ -18,8 +18,6 @@ import manager.incidents.LatLng;
 
 public class JsonToIncident extends JsonDeserializer<Incident>{
 
-	private ObjectMapper mapper = new ObjectMapper();
-	
 	@Override
 	public Incident deserialize(JsonParser jsonParser, DeserializationContext context)
 			throws IOException, JsonProcessingException {

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dbmanagement.IncidentRepository;
-import domain.Agent;
 import manager.incidents.Incident;
 
 @Service

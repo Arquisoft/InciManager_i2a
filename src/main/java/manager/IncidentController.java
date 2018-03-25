@@ -1,13 +1,11 @@
 package manager;
 
 import java.io.IOException;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import domain.Agent;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
-import manager.incidents.InciValidator;
 import manager.incidents.Incident;
 import manager.incidents.IncidentDTO;
 import manager.producers.KafkaProducer;
@@ -37,8 +34,6 @@ public class IncidentController {
 
 	@Autowired
 	private KafkaProducer kafkaProducer;
-	@Autowired
-	private InciValidator inciValidator;
 	// @Autowired
 	// private IncidentToJson incidentJson;
 	// @Autowired
@@ -61,7 +56,7 @@ public class IncidentController {
 
 		if (agentSession.getUsername().equals(agent.getUsername())
 				&& agentSession.getPassword().equals(agent.getPassword())) {
-			Writer writer = new StringWriter();
+		//	Writer writer = new StringWriter();
 			Incident incidentFinal = incident.getIncident();
 			incidentFinal.setAgentId(agent.getUsername());
 			if (agent.getKind().equals("Sensor")) {
@@ -83,7 +78,7 @@ public class IncidentController {
 		model.addAttribute("user", agent);
 		session.setAttribute("user", agent);
 
-		return "data";
+		return "redirect:data";
 	}
 
 	@RequestMapping("/incident/sensorAdd")
@@ -102,13 +97,13 @@ public class IncidentController {
 			// jsonGen=jsonFactory.createJsonGenerator(writer); //no sé si funciona
 			// incidentJson.serialize(incidentFinal, jsonGen, serial);
 			// kafkaProducer.send("incident", writer.toString());
-			// incidentServ.saveIncident(incidentFinal);
 		}
-		return "data";
+		incidentService.saveIncident(i);
+		return "redirect:data";
 	}
 
-	@RequestMapping("incident/list/{name}")
-	public String listIncidents(Model model, @PathVariable String name, HttpSession session) {
+	@RequestMapping("incident/list")
+	public String listIncidents(Model model, HttpSession session) {
 		Agent agent = (Agent) session.getAttribute("user");
 		List<Incident> incidents = incidentService
 				.getIncidentsByAgentUsername(agentsService.getAgentByName(agent.getUsername()).getUsername());
@@ -116,13 +111,13 @@ public class IncidentController {
 		return "incident/list";
 	}
 	
-	@RequestMapping("incident/details/{name}")
-	public String incidentDetails(Model model, @PathVariable String name, HttpSession session) {
+	@RequestMapping("incident/details/{id}")
+	public String incidentDetails(Model model, @PathVariable ObjectId id, HttpSession session) {
 		Agent agent = (Agent) session.getAttribute("user");
 		List<Incident> incidents = incidentService
 				.getIncidentsByAgentUsername(agentsService.getAgentByName(agent.getUsername()).getUsername());
 		for(Incident i : incidents) {
-			if(i.getName().equals(name))
+			if(i.getId().equals(id))
 				model.addAttribute("incident", i);
 		}
 		

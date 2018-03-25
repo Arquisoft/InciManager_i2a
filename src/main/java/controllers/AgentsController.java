@@ -64,6 +64,16 @@ public class AgentsController {
 			return "data";
 		}
 	}
+	
+	@RequestMapping(value = "/data", method = RequestMethod.GET)
+	public String data(Model model, HttpSession session) {
+		Agent agentSession = (Agent) session.getAttribute("user");
+		model.addAttribute("name", agentSession.getUsername());
+		model.addAttribute("location", agentSession.getLocation());
+		model.addAttribute("email", agentSession.getEmail());
+		model.addAttribute("kind", agentSession.getKind());
+		return "data";
+	}
 
 	@RequestMapping(value = "/passMenu", method = RequestMethod.GET)
 	public String showMenu(Model model, HttpSession session) {
@@ -85,8 +95,4 @@ public class AgentsController {
 		return "changePassword";
 	}
 	
-	@RequestMapping(value = "/incidentMenu")
-	public String showIncidenceMenu(Model model, HttpSession session) {
-		return "incident/add";
-	}
 }

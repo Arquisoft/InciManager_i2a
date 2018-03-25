@@ -10,13 +10,10 @@
         <form action="#" th:action="@{/userForm}" th:object="${userinfo}" id="Datos" class="form-signin" method="post">
           <h2>Login</h2>
           		<div th:if="${error}" class="text-danger">
-                        <p>Agent not found, check agent name, password and agent kind</p>
+                        <p>Agent not found, check agent name and password</p>
                     </div>
                 <input id="login" name="login" type="text" th:field="*{login}" class="form-control" placeholder="Name" />
                 <input id="password" name="password" type="password" th:field="*{password}" class="form-control" placeholder="Password" />
-                <select id="kind" name="kind" class="form-control" >
-        				<option th:each="prod : ${userinfo.kindCodes}" th:text="${prod}"></option>
-      			</select>
                 <button id="Enter" name="Enter" type="submit" value="enter" class="btn btn-block btn-primary btn-lg">Enter </button>
         </form>
 

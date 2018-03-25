@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,12 +88,13 @@ public class Incident {
 		this.multimedia = multimedia;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		if (properties != null) {
 			sb.append(",properties='");
-			Iterator it = properties.entrySet().iterator();
+			Iterator<Entry<String, Object>> it = properties.entrySet().iterator();
 			while (it.hasNext()) {
 				Map.Entry pair = (Map.Entry) it.next();
 				sb.append(pair.getKey() + ":" + pair.getValue() + " ");
