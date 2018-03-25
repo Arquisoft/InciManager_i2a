@@ -14,7 +14,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	manager_tests.IncidentDTOTests.class,
 	manager_tests.IncidentTests.class,
 	manager_tests.IncidentToJSONTests.class,
-	cucumber.CucumberTest.class
+	cucumber.CucumberTest.class,
+	view_tests.IncidentsControllerTests.class
 })
 
 public class AllTests {

@@ -20,7 +20,7 @@ public class IncidentToJSONTests {
 	private String incidentJson = "{\"name\":\"Prueba\",\"description\":\"Sunday rain\","
 			+ "\"agentId\":\"AA\",\"tags\":[\"heat\",\"failure\"],\"location\""
 			+ ":{\"lat\":\"15.6\",\"lng\":\"125.0\"},\"state\":\"INPROCESS\",\"multimedia\""
-			+ ":[\"heat.jpg\",\"fire!.jpg\"],\"properties\":{\"operator\":\"Paco\"}}";
+			+ ":[\"heat.jpg\",\"fire!.jpg\"],\"properties\":{\"operator\":\"Bombero\"}}";
 
 	@Test
 	public void serialize() throws Exception {
@@ -42,7 +42,7 @@ public class IncidentToJSONTests {
 		incident.addFile("heat.jpg");
 		incident.addFile("fire!.jpg");
 		incident.setProperties(new HashMap<String, Object>());
-		incident.getProperties().put("operator", "Paco");
+		incident.getProperties().put("operator", "Bombero");
 
 		String json = objectMapper.writeValueAsString(incident);
 		assertEquals(incidentJson, json);
