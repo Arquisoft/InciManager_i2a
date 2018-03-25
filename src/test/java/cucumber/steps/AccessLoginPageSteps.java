@@ -1,21 +1,14 @@
 package cucumber.steps;
 
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import cucumber.AbstractSteps;
-import cucumber.api.PendingException;
-import cucumber.api.java.en.Then;
-import cucumber.api.java.en.When;
-import main.Application;
-
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.is;
 
-import org.junit.runner.RunWith;
+import org.springframework.http.HttpStatus;
 
-import static org.hamcrest.Matchers.containsString;
+import cucumber.AbstractSteps;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 
 public class AccessLoginPageSteps extends AbstractSteps {
 	@When("^the client calls /$")
