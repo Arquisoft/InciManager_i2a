@@ -21,7 +21,7 @@ public class UserInfo implements Serializable {
 	private String kind;
 	private int kindCode;
 
-	UserInfo() {
+	public UserInfo() {
 
 	}
 

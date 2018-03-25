@@ -90,7 +90,7 @@ public class IncidentController {
 	public String listIncidents(Model model, HttpSession session) {
 		Agent agent = (Agent) session.getAttribute("user");
 		List<Incident> incidents = incidentService
-				.getIncidentsByAgentUsername(agentsService.getAgentByName(agent.getUsername()).getUsername());
+				.getIncidentsByAgentId(agentsService.getAgentByName(agent.getUsername()).getUsername());
 		model.addAttribute("incidList", incidents);
 		return "incident/list";
 	}
@@ -99,7 +99,7 @@ public class IncidentController {
 	public String incidentDetails(Model model, @PathVariable ObjectId id, HttpSession session) {
 		Agent agent = (Agent) session.getAttribute("user");
 		List<Incident> incidents = incidentService
-				.getIncidentsByAgentUsername(agentsService.getAgentByName(agent.getUsername()).getUsername());
+				.getIncidentsByAgentId(agentsService.getAgentByName(agent.getUsername()).getUsername());
 		for(Incident i : incidents) {
 			if(i.getId().equals(id))
 				model.addAttribute("incident", i);

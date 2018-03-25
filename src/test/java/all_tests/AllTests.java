@@ -13,6 +13,7 @@ import org.junit.runners.Suite.SuiteClasses;
 	view_tests.AgentsDataControllerTest.class,
 	manager_tests.IncidentDTOTests.class,
 	manager_tests.IncidentTests.class,
+	manager_tests.IncidentToJSONTests.class,
 	cucumber.CucumberTest.class
 })
 

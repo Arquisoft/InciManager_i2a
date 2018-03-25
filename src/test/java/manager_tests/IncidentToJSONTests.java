@@ -47,5 +47,7 @@ public class IncidentToJSONTests {
 		String json = objectMapper.writeValueAsString(incident);
 		assertEquals(incidentJson, json);
 	}
+	
+	
 
 }

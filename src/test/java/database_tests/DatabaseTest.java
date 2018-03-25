@@ -23,6 +23,8 @@ import main.Application;
 import manager.incidents.InciState;
 import manager.incidents.Incident;
 import manager.incidents.LatLng;
+import services.AgentsService;
+import services.IncidentService;
 import util.JasyptEncryptor;
 
 /**
@@ -36,10 +38,15 @@ public class DatabaseTest {
 	private AgentsRepository repo;
 	@Autowired
 	private IncidentRepository inciRepo;
+	@Autowired
+	private AgentsService agentServ;
+	@Autowired
+	private IncidentService inciServ;
 
 	// User to use as reference for test
 	private Agent testedUser;
 	private Agent testedUser2;
+	private Agent a;
 	private Incident incident;
 
 	@Autowired
@@ -56,7 +63,7 @@ public class DatabaseTest {
 	 */
 	@Before
 	public void setUp() {
-		Agent a = new Agent("agent1", "pass-01", "Person");
+		a = new Agent("agent1", "pass-01", "Person");
 		a.setUserId("id1");
 		incident = new Incident();
 		incident.setAgent(a);
@@ -147,5 +154,23 @@ public class DatabaseTest {
 		List<Incident> incids = inciRepo.findAllByAgentId("id1");
 		Assert.assertEquals(1,incids.size());
 		Assert.assertEquals(incident, incids.get(0));
+	}
+	
+	@Test
+	public void testAgentService() {
+		Assert.assertEquals(agentServ.getAgent("Luis", "Luis123"),testedUser );
+		Assert.assertEquals(agentServ.getAgentByName("Luis"),testedUser );
+	}
+	
+	@Test
+	public void testInciService() {
+		Assert.assertEquals(inciServ.getIncidentsByAgentId("id0").size(),0);
+		Incident i2 = new Incident();
+		Agent a2=new Agent();
+		a2.setUserId("id0");
+		i2.setAgent(a2);
+		inciServ.saveIncident(i2);
+		Assert.assertEquals(inciServ.getIncidentsByAgentId("id0").size(),1);
+		inciRepo.delete(i2);
 	}
 }

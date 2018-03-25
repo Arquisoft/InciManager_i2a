@@ -11,11 +11,18 @@ import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import dbmanagement.Database;
 import domain.Agent;
+import main.Application;
 import manager.incidents.InciState;
 import manager.incidents.Incident;
 import manager.incidents.LatLng;
+import services.AgentsService;
 
 public class IncidentTests {
 
@@ -23,6 +30,7 @@ public class IncidentTests {
 	private Incident i2;
 	private Incident i3;
 
+	
 	@Before
 	public void setUp() {
 		i1 = new Incident("i1", "System failure", new Agent("alum", "alumnossi", "seguridad"), new ArrayList<String>(),
@@ -126,6 +134,9 @@ public class IncidentTests {
 		Incident i5 = new Incident("i2", "Overheated system","i2",
 				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN,null, new ArrayList<String>());
 		assertEquals(i5.getAgentId(),"i2");
+		Incident i6 = new Incident("i2", "Overheated system","i2",
+				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>());
+		assertEquals(i6.getAgentId(),"i2");
 	}
 
 }

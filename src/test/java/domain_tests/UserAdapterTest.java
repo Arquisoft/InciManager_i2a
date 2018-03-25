@@ -33,6 +33,9 @@ public class UserAdapterTest {
 		UserInfo info = adapter.userToInfo();
 		UserInfoAdapter adapter1 = new UserInfoAdapter(user2);
 		UserInfo info1 = adapter1.userToInfo();
+		UserInfo info2 = new UserInfo();
+		info2.setId("i2");
+		assertEquals(info2.getId().hashCode(),info2.hashCode());
 		info.setEmail("a@b.com");
 		assertEquals(info.getEmail(), "a@b.com");
 		info.setKind("Sensor");
