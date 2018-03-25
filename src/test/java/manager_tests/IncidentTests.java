@@ -28,7 +28,7 @@ public class IncidentTests {
 		i1 = new Incident("i1", "System failure", new Agent("alum", "alumnossi", "seguridad"), new ArrayList<String>(),
 				new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>());
 		i2 = new Incident("i2", "Overheated system", new Agent("alum", "alumnossi", "seguridad"),
-				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>());
+				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN,null, new ArrayList<String>());
 		i3 = new Incident();
 	}
 
@@ -53,6 +53,11 @@ public class IncidentTests {
 		i1.setLocation(new LatLng(0.5, 9.2));
 		assertTrue(i1.getLocation().getLat() == 0.5);
 		assertTrue(i1.getLocation().getLng() == 9.2);
+		LatLng location = new LatLng();
+		location.setLat(5.0);
+		location.setLng(6.7);
+		i3.setLocation(location);
+		assertEquals(i3.getLocation(),location);
 	}
 
 	@Test
@@ -107,6 +112,20 @@ public class IncidentTests {
 		String result = "{name='i1',description='System failure',agent='null'"
 				+ ",tags='[]',location='GeoCords [lat=20.2, lng=17.2]',state='OPEN',multimedia='[]',properties='temperature:20.1 fire:false ',emergency=false}";
 		assertEquals(i1.toString(), result);
+	}
+	
+	@Test
+	public void testAgent() {
+		assertEquals(i1.getAgentId(),null);
+		i1.setAgentId("i1");
+		assertEquals(i1.getAgentId(),"i1");
+		Agent a = new Agent();
+		a.setUserId("I1");
+		i1.setAgent(a);
+		assertEquals(i1.getAgentId(),"I1");
+		Incident i5 = new Incident("i2", "Overheated system","i2",
+				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN,null, new ArrayList<String>());
+		assertEquals(i5.getAgentId(),"i2");
 	}
 
 }

@@ -1,5 +1,9 @@
 package database_tests;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,10 +15,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import dbmanagement.AgentsRepository;
 import dbmanagement.Database;
+import dbmanagement.IncidentRepository;
 import domain.Agent;
 import domain.UserInfo;
 import domain.UserInfoAdapter;
 import main.Application;
+import manager.incidents.InciState;
+import manager.incidents.Incident;
+import manager.incidents.LatLng;
 import util.JasyptEncryptor;
 
 /**
@@ -26,10 +34,13 @@ public class DatabaseTest {
 
 	@Autowired
 	private AgentsRepository repo;
+	@Autowired
+	private IncidentRepository inciRepo;
 
 	// User to use as reference for test
 	private Agent testedUser;
 	private Agent testedUser2;
+	private Incident incident;
 
 	@Autowired
 	private Database dat;
@@ -45,6 +56,24 @@ public class DatabaseTest {
 	 */
 	@Before
 	public void setUp() {
+		Agent a = new Agent("agent1", "pass-01", "Person");
+		a.setUserId("id1");
+		incident = new Incident();
+		incident.setAgent(a);
+		incident.setName("Run");
+		incident.setDescription("Sunday rain");
+		incident.setLocation(new LatLng(15.6, 125));
+		incident.setTags(new ArrayList<String>());
+		incident.setState(InciState.INPROCESS);
+		incident.addTag("heat");
+		incident.addTag("failure");
+		incident.setMultimedia(new ArrayList<String>());
+		incident.addFile("heat.jpg");
+		incident.addFile("fire!.jpg");
+		incident.setProperties(new HashMap<String, Object>());
+		incident.getProperties().put("operator", "Paco");
+		dat.saveIncident(incident);
+		
 		testedUser = new Agent("Luis", "10N20E", "LGracia@gmail.com", "Luis123",
 				"100", "Person", 1);
 		repo.insert(testedUser);
@@ -58,6 +87,7 @@ public class DatabaseTest {
 	public void tearDown() {
 		repo.delete(testedUser);
 		repo.delete(testedUser2);
+		inciRepo.delete(incident);
 	}
 
 	@Test
@@ -110,5 +140,12 @@ public class DatabaseTest {
 		Assert.assertEquals("Pepa", updatedUser.getUsername());
 		Assert.assertEquals("321", updatedUser.getUserId());
 		Assert.assertEquals("asd@gmail.com", updatedUser.getEmail());
+	}
+	
+	@Test
+	public void testSaveIncident() {
+		List<Incident> incids = inciRepo.findAllByAgentId("id1");
+		Assert.assertEquals(1,incids.size());
+		Assert.assertEquals(incident, incids.get(0));
 	}
 }
