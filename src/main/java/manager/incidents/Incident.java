@@ -36,6 +36,7 @@ public class Incident {
 	private InciState state;
 	private Map<String, Object> properties;
 	private List<String> multimedia;
+	private int kindCode;
 	
 	private boolean emergency=false;
 	
@@ -45,7 +46,7 @@ public class Incident {
 	
 	
 	public Incident(String name, String description, String agentId, List<String> tags, LatLng location,
-			InciState state, List<String> multimedia) {
+			InciState state, List<String> multimedia , int kindcode) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -54,10 +55,11 @@ public class Incident {
 		this.location = location;
 		this.state = state;
 		this.multimedia = multimedia;
+		this.kindCode=kindcode;
 	}
 	
 	public Incident(String name, String description, String agentId, List<String> tags, LatLng location,
-			InciState state, HashMap<String,Object> properties,List<String> multimedia) {
+			InciState state, HashMap<String,Object> properties,List<String> multimedia, int kindcode) {
 		this.name = name;
 		this.description = description;
 		this.agentId=agentId;
@@ -66,10 +68,11 @@ public class Incident {
 		this.state = state;
 		this.properties=properties;
 		this.multimedia=multimedia;
+		this.kindCode=kindcode;
 	}
 	
 	public Incident(String name, String description, Agent agentId, List<String> tags, LatLng location,
-			InciState state, List<String> multimedia) {
+			InciState state, List<String> multimedia, int kindcode) {
 		super();
 		this.name = name;
 		this.description = description;
@@ -78,10 +81,11 @@ public class Incident {
 		this.location = location;
 		this.state = state;
 		this.multimedia=multimedia;
+		this.kindCode=kindcode;
 	}
 	
 	public Incident(String name, String description, Agent agentId, List<String> tags, LatLng location,
-			InciState state, HashMap<String,Object> properties,List<String> multimedia) {
+			InciState state, HashMap<String,Object> properties,List<String> multimedia, int kindcode) {
 		this.name = name;
 		this.description = description;
 		this.agentId=agentId.getUserId();
@@ -90,6 +94,7 @@ public class Incident {
 		this.state = state;
 		this.properties = properties;
 		this.multimedia = multimedia;
+		this.kindCode=kindcode;
 	}
 
 	@SuppressWarnings("rawtypes")
@@ -107,7 +112,7 @@ public class Incident {
 			sb.append("'");
 		}
 		return "{" + "name='" + name + "'" + ",description='" + description + "'" + ",agent='" + agentId + "'"
-				+ ",tags='" + tags + "'" + ",location='" + location.toString() + "'" + ",state='" + state + "'"
+				+ ",kindCode="+kindCode+",tags='" + tags + "'" + ",location='" + location.toString() + "'" + ",state='" + state + "'"
 				+ ",multimedia='" + multimedia + "'"+sb.toString()
 				+ ",emergency="+emergency+"}";
 	}
@@ -228,5 +233,13 @@ public class Incident {
 	public void setEmergency(boolean emergency) {
 		this.emergency = emergency;
 	}
+	
+	public int getKindCode() {
+		return kindCode;
+	}
 
+	public void setKindCode(int kindCode) {
+		this.kindCode = kindCode;
+	}
+	
 }

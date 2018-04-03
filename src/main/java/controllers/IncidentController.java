@@ -51,6 +51,7 @@ public class IncidentController {
 		//	Writer writer = new StringWriter();
 			Incident incidentFinal = incident.getIncident();
 			incidentFinal.setAgentId(agent.getUsername());
+			incidentFinal.setKindCode(agent.getKindCode());
 			if (agent.getKind().equals("Sensor")) {
 				session.setAttribute("incident", incidentFinal);
 				return "/incident/sensorAdd";

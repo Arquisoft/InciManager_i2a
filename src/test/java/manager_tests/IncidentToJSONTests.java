@@ -18,9 +18,9 @@ import util.SerializerLinker;
 public class IncidentToJSONTests {
 
 	private String incidentJson = "{\"name\":\"Prueba\",\"description\":\"Sunday rain\","
-			+ "\"agentId\":\"AA\",\"tags\":[\"heat\",\"failure\"],\"location\""
+			+ "\"agentId\":\"AA\",\"kindCode\":\"1\",\"tags\":[\"heat\",\"failure\"],\"location\""
 			+ ":{\"lat\":\"15.6\",\"lng\":\"125.0\"},\"state\":\"INPROCESS\",\"multimedia\""
-			+ ":[\"heat.jpg\",\"fire!.jpg\"],\"properties\":{\"operator\":\"Bombero\"}}";
+			+ ":[\"heat.jpg\",\"fire!.jpg\"],\"properties\":{\"type\":\"Bombero\"}}";
 
 	@Test
 	public void serialize() throws Exception {
@@ -32,6 +32,7 @@ public class IncidentToJSONTests {
 		Incident incident = new Incident();
 		incident.setAgent(a);
 		incident.setName("Prueba");
+		incident.setKindCode(1);
 		incident.setDescription("Sunday rain");
 		incident.setLocation(new LatLng(15.6, 125));
 		incident.setTags(new ArrayList<String>());
@@ -42,7 +43,7 @@ public class IncidentToJSONTests {
 		incident.addFile("heat.jpg");
 		incident.addFile("fire!.jpg");
 		incident.setProperties(new HashMap<String, Object>());
-		incident.getProperties().put("operator", "Bombero");
+		incident.getProperties().put("type", "Bombero");
 
 		String json = objectMapper.writeValueAsString(incident);
 		assertEquals(incidentJson, json);
