@@ -98,7 +98,10 @@ public class InsertSampleDataService {
 			String incidentJson = "{ "
 
 					+ " '_class' : 'manager.incidents.Incident'," + " 'name' : 'Temperature',"
-					+ " 'description' : 'Hight temperature'," + " 'agentId' : 'Prueba02'," + " 'tags' : ['temperature'],"
+					+ " 'description' : 'Hight temperature'," 
+					+ " 'agentId' : 'Prueba02'," 
+					+ " 'kindCode': '3',"
+					+ " 'tags' : ['temperature'],"
 					+ " 'location' : {'lat' : 1234.0, 'lng' : 1234.0}," + " 'state' : 'OPEN',"
 					+ " 'properties' : {'temperature' : '" + temperature + "'}," + " 'multimedia' : [''],"
 					+ " 'emergency' : " + emergency + "}";
