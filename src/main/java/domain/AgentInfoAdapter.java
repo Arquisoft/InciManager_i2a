@@ -6,16 +6,16 @@ package domain;
  * that contains a subset of the fields in the User class
  * Modified by Javier on 13/02/2018 to match the new requirements.
  */
-public class UserInfoAdapter {
+public class AgentInfoAdapter {
 
 	private Agent user;
 
-	public UserInfoAdapter(Agent user) {
+	public AgentInfoAdapter(Agent user) {
 		this.user = user;
 	}
 
-	public UserInfo userToInfo() {
-		return new UserInfo(user.getUsername(), user.getLocation(), user.getEmail(), user.getUserId(),
+	public AgentInfo userToInfo() {
+		return new AgentInfo(user.getUsername(), user.getLocation(), user.getEmail(), user.getUserId(),
 				user.getKind().toString(), user.getKindCode());
 	}
 }

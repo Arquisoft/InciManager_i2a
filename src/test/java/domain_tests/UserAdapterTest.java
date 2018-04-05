@@ -8,8 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import domain.Agent;
-import domain.UserInfo;
-import domain.UserInfoAdapter;
+import domain.AgentInfo;
+import domain.AgentInfoAdapter;
 
 /**
  * Created by Nicolás on 18/02/2017. Modified by Marcos on 17/02/2018
@@ -29,11 +29,11 @@ public class UserAdapterTest {
 
 	@Test
 	public void testUserInfo() {
-		UserInfoAdapter adapter = new UserInfoAdapter(user1);
-		UserInfo info = adapter.userToInfo();
-		UserInfoAdapter adapter1 = new UserInfoAdapter(user2);
-		UserInfo info1 = adapter1.userToInfo();
-		UserInfo info2 = new UserInfo();
+		AgentInfoAdapter adapter = new AgentInfoAdapter(user1);
+		AgentInfo info = adapter.userToInfo();
+		AgentInfoAdapter adapter1 = new AgentInfoAdapter(user2);
+		AgentInfo info1 = adapter1.userToInfo();
+		AgentInfo info2 = new AgentInfo();
 		info2.setId("i2");
 		assertEquals(info2.getId().hashCode(),info2.hashCode());
 		info.setEmail("a@b.com");
@@ -62,8 +62,8 @@ public class UserAdapterTest {
 
 	@Test
 	public void testAdapter() {
-		UserInfoAdapter adapter = new UserInfoAdapter(user1);
-		UserInfo info = adapter.userToInfo();
+		AgentInfoAdapter adapter = new AgentInfoAdapter(user1);
+		AgentInfo info = adapter.userToInfo();
 		assertEquals(info.getName(), user1.getUsername());
 		assertEquals(info.getEmail(), user1.getEmail());
 		assertEquals(info.getKind(), user1.getKind().toString());
@@ -71,8 +71,8 @@ public class UserAdapterTest {
 		assertEquals(info.getLocation(), user1.getLocation());
 		assertEquals(info.getId(), user1.getUserId());
 
-		UserInfoAdapter adapter1 = new UserInfoAdapter(user2);
-		UserInfo info1 = adapter1.userToInfo();
+		AgentInfoAdapter adapter1 = new AgentInfoAdapter(user2);
+		AgentInfo info1 = adapter1.userToInfo();
 		assertEquals(info1.getName(), user2.getUsername());
 		assertEquals(info1.getEmail(), user2.getEmail());
 		assertEquals(info1.getKind(), user2.getKind().toString());

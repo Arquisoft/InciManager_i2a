@@ -41,7 +41,7 @@ public class IncidentDTO {
 			}
 		}
 		return new Incident(name, description, "", tagList, new LatLng(lat, lon), InciState.OPEN, properties,
-				multiList);
+				multiList,0);
 	}
 
 	public String getName() {
