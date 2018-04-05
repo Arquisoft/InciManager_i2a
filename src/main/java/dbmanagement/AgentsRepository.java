@@ -17,5 +17,6 @@ public interface AgentsRepository extends MongoRepository<Agent, ObjectId>{
 	@Query("{ 'name' : ?0 }")
 	public Agent findByName(String name);
 
-	public Agent findById(ObjectId obid);
+	@Query("{ 'userId' : ?0 }")
+	public Agent findByUserId(String id);
 }

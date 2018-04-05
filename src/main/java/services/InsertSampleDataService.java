@@ -33,22 +33,30 @@ public class InsertSampleDataService {
 		DBCollection incidents = db.getCollection("incidents");
 		incidents.remove(new BasicDBObject());
 
-		// Insert agents
-		String json = "{ "
+		//Insert agents
+		String json ="{ "
 
-				+ " 'name' : 'Prueba01'," + " 'location' : 'Aviles'," + " 'email' : 'prueba01@prueba.es',"
-				+ " 'password' : 'khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq',"
-				+ " 'kind' : 'PERSON'," + " 'kindCode' : '1' }";
-		DBObject dbObject = (DBObject) JSON.parse(json);
+			   +" 'name' : 'Prueba01',"
+			   +" 'location' : 'Aviles',"
+			   +" 'email' : 'prueba01@prueba.es',"
+			   +" 'password' : 'khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq',"
+			   +" 'userId' : '555555555A',"
+			   +" 'kind' : 'PERSON',"
+			   +" 'kindCode' : '1' }";
+		DBObject dbObject = (DBObject)JSON.parse(json);
 
 		agents.insert(dbObject);
 
-		String json2 = "{ "
+		String json2 ="{ "
 
-				+ " 'name' : 'Prueba02'," + " 'location' : 'Aviles'," + " 'email' : 'prueba02@prueba.es',"
-				+ " 'password' : 'khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq',"
-				+ " 'kind' : 'SENSOR'," + " 'kindCode' : '3' }";
-		DBObject dbObject2 = (DBObject) JSON.parse(json2);
+				   +" 'name' : 'Prueba02',"
+				   +" 'location' : 'Aviles',"
+				   +" 'email' : 'prueba02@prueba.es',"
+				   +" 'password' : 'khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq',"
+				   +" 'userId' : '555555555B',"
+				   +" 'kind' : 'SENSOR',"
+				   +" 'kindCode' : '3' }";
+		DBObject dbObject2 = (DBObject)JSON.parse(json2);
 
 		agents.insert(dbObject2);
 
@@ -61,11 +69,11 @@ public class InsertSampleDataService {
 					try {
 						sensorSimulator(incidents);
 					} catch (InterruptedException e1) {
-						
+
 						e1.printStackTrace();
 					}
 					// ------- ends here
-					
+
 				}
 			}
 		};
@@ -78,7 +86,7 @@ public class InsertSampleDataService {
 	private void sensorSimulator(DBCollection incidents) throws InterruptedException {
 		Random rand = new Random();
 
-	
+
 		while(true)
 		{
 			int temperature = rand.nextInt(60);
@@ -101,7 +109,7 @@ public class InsertSampleDataService {
 			if (emergency) {
 				kafkaProducer.send("incident", incidentJson);}
 			Thread.sleep(3000);
-			
+
 	}
 
 	}

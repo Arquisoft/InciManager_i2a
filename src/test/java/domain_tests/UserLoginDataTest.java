@@ -5,22 +5,22 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
-import domain.UserLoginData;
+import domain.AgentLoginData;
 
 /**
  * Created by Nicolás on 18/02/2017.
  */
 public class UserLoginDataTest {
 
-	private UserLoginData test;
-	private UserLoginData test2;
+	private AgentLoginData test;
+	private AgentLoginData test2;
 
 	@Before
 	public void setUp() {
-		test = new UserLoginData();
+		test = new AgentLoginData();
 		test.setLogin("hola1");
 		test.setPassword("holaPassword");
-		test2 = new UserLoginData("hola2", "passwHola", "Person");
+		test2 = new AgentLoginData("hola2", "passwHola", "Person");
 	}
 
 	@Test

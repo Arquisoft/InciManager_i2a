@@ -9,18 +9,18 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "data")
-public class UserLoginData {
+public class AgentLoginData {
 
 	private String login;
 	private String password;
 	private String kind;
 	private List<String> kindCodes = new ArrayList<String>();
 
-	public UserLoginData(){
+	public AgentLoginData(){
 		identifyAgentType();
 	}
 
-	public UserLoginData(String login, String password, String kind) {
+	public AgentLoginData(String login, String password, String kind) {
 		this.login = login;
 		this.password = password;
 		this.setKind(kind);
