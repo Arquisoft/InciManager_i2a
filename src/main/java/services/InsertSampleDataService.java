@@ -60,7 +60,8 @@ public class InsertSampleDataService {
 		
 		Random rand= new Random();
 		
-		while (true) {
+		int times=3;
+		while (times>0) {
 		int temperature = rand.nextInt(60);
 		boolean emergency=false;
 		if(temperature>35) {
@@ -85,7 +86,8 @@ public class InsertSampleDataService {
 		
 		incidents.insert(incidentObj);
 		if(emergency) kafkaProducer.send("incident", incidentJson);
-		Thread.sleep(600000);
+		Thread.sleep(3000);
+		times--;
 		}
 	}
 	
