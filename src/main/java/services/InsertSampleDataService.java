@@ -40,6 +40,7 @@ public class InsertSampleDataService {
 			   +" 'location' : 'Aviles',"
 			   +" 'email' : 'prueba01@prueba.es',"
 			   +" 'password' : 'khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq',"
+			   +" 'userId' : '555555555A',"
 			   +" 'kind' : 'PERSON',"
 			   +" 'kindCode' : '1' }";		
 		DBObject dbObject = (DBObject)JSON.parse(json);
@@ -52,6 +53,7 @@ public class InsertSampleDataService {
 				   +" 'location' : 'Aviles',"
 				   +" 'email' : 'prueba02@prueba.es',"
 				   +" 'password' : 'khZZwjdhWwVbMdmOvz9eqBfKR1N6A+CdFBDM9c1dQduUnGewQyPRlBxB4Q6wT7Cq',"
+				   +" 'userId' : '555555555B',"
 				   +" 'kind' : 'SENSOR',"
 				   +" 'kindCode' : '3' }";		
 		DBObject dbObject2 = (DBObject)JSON.parse(json2);
