@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import domain.Agent;
-import domain.UserInfo;
-import domain.UserInfoAdapter;
-import domain.UserLoginData;
+import domain.AgentInfo;
+import domain.AgentInfoAdapter;
+import domain.AgentLoginData;
 import services.AgentsService;
 import util.JasyptEncryptor;
 
@@ -34,7 +34,7 @@ public class AgentsController {
 	// The first page shown will be login.html.
 	@GetMapping(value = "/")
 	public String getParticipantInfo(Model model, HttpSession session) {
-		UserLoginData data = new UserLoginData();
+		AgentLoginData data = new AgentLoginData();
 		model.addAttribute("userinfo", data);
 		return "login";
 	}
@@ -42,7 +42,7 @@ public class AgentsController {
 	// This method process an POST html request once fulfilled the login.html
 	// form (clicking in the "Enter" button).
 	@RequestMapping(value = "/userForm", method = RequestMethod.POST)
-	public String showInfo(Model model, @ModelAttribute UserLoginData data,
+	public String showInfo(Model model, @ModelAttribute AgentLoginData data,
 			HttpSession session, BindingResult result) {
 		Agent user = part.getAgent(data.getLogin(), data.getPassword(),
 				data.getKind());
@@ -52,8 +52,8 @@ public class AgentsController {
 			model.addAttribute("error",true);
 			return "login";
 		} else {
-			UserInfoAdapter adapter = new UserInfoAdapter(user);
-			UserInfo info = adapter.userToInfo();
+			AgentInfoAdapter adapter = new AgentInfoAdapter(user);
+			AgentInfo info = adapter.userToInfo();
 			model.addAttribute("name", info.getName());
 			model.addAttribute("location", info.getLocation());
 			model.addAttribute("email", info.getEmail());

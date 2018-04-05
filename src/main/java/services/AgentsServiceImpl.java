@@ -55,8 +55,6 @@ public class AgentsServiceImpl implements AgentsService {
 
 	@Override
 	public Agent getAgentById(String id) {
-		ObjectId obid = new ObjectId(id);
-		
-		return agentsRep.findById(obid);
+		return agentsRep.findByUserId(id);
 	}
 }

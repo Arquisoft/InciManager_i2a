@@ -4,9 +4,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import domain.Agent;
-import domain.UserInfo;
-import domain.UserInfoAdapter;
-import domain.UserLoginData;
+import domain.AgentInfo;
+import domain.AgentInfoAdapter;
+import domain.AgentLoginData;
 import services.AgentsService;
 
 /**
@@ -21,10 +21,10 @@ public class UserResponseAction {
 		this.part = part;
 	}
 
-	public ResponseEntity<UserInfo> execute(UserLoginData info) {
+	public ResponseEntity<AgentInfo> execute(AgentLoginData info) {
 		Agent user = part.getAgent(info.getLogin(), info.getPassword(),
 				info.getKind());
-		UserInfoAdapter data = new UserInfoAdapter(user);
+		AgentInfoAdapter data = new AgentInfoAdapter(user);
 		if (user == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		} else

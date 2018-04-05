@@ -17,8 +17,8 @@ import dbmanagement.AgentsRepository;
 import dbmanagement.Database;
 import dbmanagement.IncidentRepository;
 import domain.Agent;
-import domain.UserInfo;
-import domain.UserInfoAdapter;
+import domain.AgentInfo;
+import domain.AgentInfoAdapter;
 import main.Application;
 import manager.incidents.InciState;
 import manager.incidents.Incident;
@@ -59,6 +59,7 @@ public class DatabaseTest {
 	public void setUp() {
 		a = new Agent("agent1", "pass-01", "Person");
 		a.setUserId("id1");
+		a.setKind("Person");
 		incident = new Incident();
 		incident.setAgent(a);
 		incident.setName("Run");
@@ -125,9 +126,9 @@ public class DatabaseTest {
 		Assert.assertEquals("321", user.getUserId());
 		Assert.assertEquals("asd", user.getEmail());
 
-		UserInfoAdapter userAdapter = new UserInfoAdapter(user);
+		AgentInfoAdapter userAdapter = new AgentInfoAdapter(user);
 
-		UserInfo userInfo = userAdapter.userToInfo();
+		AgentInfo userInfo = userAdapter.userToInfo();
 
 		Assert.assertEquals(user.getUsername(), userInfo.getName());
 		Assert.assertEquals(user.getEmail(), userInfo.getEmail());
@@ -152,9 +153,12 @@ public class DatabaseTest {
 	
 	@Test
 	public void testAgentService() {
+		repo.insert(a);
 		Assert.assertEquals(agentServ.getAgent("Luis", "Luis123"),testedUser );
 		Assert.assertEquals(agentServ.getAgentByName("Luis"),testedUser );
 		Assert.assertNull(agentServ.getAgent("aa","aaaaaaa"));
+		Assert.assertEquals(agentServ.getAgentById("id1"), a);
+		repo.delete(a);
 	}
 	
 	@Test
