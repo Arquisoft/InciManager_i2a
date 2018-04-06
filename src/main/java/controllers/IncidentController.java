@@ -9,7 +9,8 @@ import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,9 +24,12 @@ import manager.producers.KafkaProducer;
 import services.AgentsService;
 import services.IncidentService;
 import util.SerializerLinker;
+import validators.AddInciValidator;
 
 @Controller
 public class IncidentController {
+	
+	private boolean error = false;
 
 	@Autowired
 	private AgentsService agentsService;
@@ -35,20 +39,31 @@ public class IncidentController {
 
 	@Autowired
 	private KafkaProducer kafkaProducer;
+	
+	@Autowired
+	private AddInciValidator addValidator;
 
 	@RequestMapping("/incident/add")
 	public String landing(Model model, HttpSession session) {
 		model.addAttribute("incident", new IncidentDTO());
+		model.addAttribute("error",error);
 		return "/incident/add";
 	}
 
 	@RequestMapping("/send")
-	public String send(Model model, @ModelAttribute IncidentDTO incident, HttpSession session) throws IOException {
+	public String send(Model model, @Validated IncidentDTO incident, BindingResult result, @RequestParam String type,
+			HttpSession session) throws IOException {
+		addValidator.validate(incident, result);
+		if (result.hasErrors()) {
+				error = true;
+				return "redirect:/incident/add";
+		}
+		error = false;
 		Agent agentSession = (Agent) session.getAttribute("user");
 		Agent agent = agentsService.getAgentByName(agentSession.getUsername());
 		if (agentSession.getUsername().equals(agent.getUsername())
 				&& agentSession.getPassword().equals(agent.getPassword())) {
-		//	Writer writer = new StringWriter();
+			incident.setType(type);
 			Incident incidentFinal = incident.getIncident();
 			incidentFinal.setAgentId(agent.getUsername());
 			incidentFinal.setKindCode(agent.getKindCode());
@@ -94,17 +109,17 @@ public class IncidentController {
 		model.addAttribute("incidList", incidents);
 		return "incident/list";
 	}
-	
+
 	@RequestMapping("incident/details/{id}")
 	public String incidentDetails(Model model, @PathVariable ObjectId id, HttpSession session) {
 		Agent agent = (Agent) session.getAttribute("user");
 		List<Incident> incidents = incidentService
 				.getIncidentsByAgentId(agentsService.getAgentByName(agent.getUsername()).getUsername());
-		for(Incident i : incidents) {
-			if(i.getId().equals(id))
+		for (Incident i : incidents) {
+			if (i.getId().equals(id))
 				model.addAttribute("incident", i);
 		}
-		
+
 		return "incident/details";
 	}
 

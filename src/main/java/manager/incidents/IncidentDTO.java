@@ -14,12 +14,13 @@ public class IncidentDTO {
 	private double lon;
 	private String multimedia;
 	private String properties;
+	private String type;
 
 	public IncidentDTO() {
 	}
 
 	public IncidentDTO(String name, String description, String tags, double lat, double lon, String multimedia,
-			String properties) {
+			String properties, String type) {
 		this.name = name;
 		this.description = description;
 		this.tags = tags;
@@ -27,13 +28,15 @@ public class IncidentDTO {
 		this.lon = lon;
 		this.multimedia = multimedia;
 		this.properties = properties;
+		this.type = type;
 	}
 
 	public Incident getIncident() {
 		List<String> tagList = Arrays.asList(tags.split(","));
 		List<String> multiList = Arrays.asList(multimedia.split(","));
 		HashMap<String, Object> properties = new HashMap<String, Object>();
-		if (this.properties != null) {
+		properties.put("type", type);
+		if (this.properties != null && !this.getProperties().isEmpty()) {
 			List<String> propList = Arrays.asList(this.properties.split(","));
 			for (String p : propList) {
 				List<String> ar = Arrays.asList(p.split(":"));
@@ -95,7 +98,7 @@ public class IncidentDTO {
 	@Override
 	public String toString() {
 		return "IncidentDTO [name=" + name + ", description=" + description + ", tags=" + tags + ", lat=" + lat
-				+ ", lon=" + lon + ", multimedia=" + multimedia + ", properties=" + properties + "]";
+				+ ", lon=" + lon + ", type="+type+", multimedia=" + multimedia + ", properties=" + properties + "]";
 	}
 
 	public String getProperties() {
@@ -105,5 +108,14 @@ public class IncidentDTO {
 	public void setProperties(String properties) {
 		this.properties = properties;
 	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
+	}
+	
 
 }

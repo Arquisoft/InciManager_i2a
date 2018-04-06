@@ -18,19 +18,14 @@ public class UserTest {
 
 	@Before
 	public void setUp() {
-		marcos = new Agent("Marcos", "Oviedo", "User1@hola.com", "user1Password",
-				"10", "Person", 1);
-		alba = new Agent("Alba", "Gijon", "User2@hola.com", "user2Password",
-				"11", "Person", 1);
-		javier = new Agent("Javier", "Aviles", "User3@hola.com", "user3Password",
-				"12", "Person", 1);
+		marcos = new Agent("Marcos", "Oviedo", "User1@hola.com", "user1Password", "10", "Person", 1);
+		alba = new Agent("Alba", "Gijon", "User2@hola.com", "user2Password", "11", "Person", 1);
+		javier = new Agent("Javier", "Aviles", "User3@hola.com", "user3Password", "12", "Person", 1);
 	}
 
 	@Test
 	public void firstNameTest() {
-		
-		
-		
+
 		Assert.assertEquals("Marcos", marcos.getUsername());
 		Assert.assertEquals("Alba", alba.getUsername());
 		Assert.assertEquals("Javier", javier.getUsername());
@@ -95,8 +90,7 @@ public class UserTest {
 
 		marcos.setPassword("1234");
 
-		Assert.assertTrue(
-				encryptor.checkPassword("1234", marcos.getPassword()));
+		Assert.assertTrue(encryptor.checkPassword("1234", marcos.getPassword()));
 
 		alba.setPassword("abcd");
 		Assert.assertTrue(encryptor.checkPassword("abcd", alba.getPassword()));

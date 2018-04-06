@@ -28,6 +28,9 @@
     <div class="container">
         <form action="#" th:action="@{/send}" id="incidencia" class="form-signin" method="post" th:object="${incident}">
           <h2>Incidence Information</h2>
+          <div th:if="${error}" class="text-danger">
+                        <p>The tags, multimedia or properties field has some errors. Check the formats and try again</p>
+                </div>
                 <div class="form-group">
 				<label class="control-label col-sm-2" for="name">Name:</label> 
 					<div class="col-sm-10">
@@ -46,23 +49,20 @@
 				<div class="form-group">
 				<label class="control-label col-sm-2" for="tags">Tags:</label> 
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="tags"
-							 />
+						<input type="text" class="form-control" name="tags" />
 					</div>
 				</div>
-				<p>(must be a double)</p>
 				<div class="form-group">
 				<label class="control-label col-sm-2" for="lat">Lattitude:</label> 
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="lat"
+						<input type="number" step=".01" class="form-control" name="lat"
 							required="true" />
 					</div>
 				</div>
-				<p>(must be a double)</p>
 				<div class="form-group">
 				<label class="control-label col-sm-2" for="lon">Longitude:</label> 
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="lon"
+						<input type="number" step=".01" class="form-control" name="lon"
 							required="true" />
 					</div>
 				</div>
@@ -77,16 +77,24 @@
 				<div class="form-group">
 				<label class="control-label col-sm-2" for="multimedia">Multimedia:</label> 
 					<div class="col-sm-10">
-						<input type="text" class="form-control" name="multimedia"
-							/>
+						<input type="text" class="form-control" name="multimedia"/>
 					</div>
 				</div>
 				<div class="form-group">
-				<p>(compulsory format->type:value,prop1:value)</p>
+				<label class="control-label col-sm-2" for="type">Tipo del incidente:</label> 
+				<select name="type" class="form-control" >
+        				<option value="Bombero">Bombero</option>
+        				<option value="Policia">Policia</option>
+        				<option value="Rescate">Rescate</option>
+        				<option value="Medicina">Medicina</option>
+      			</select>
+      			</div>
+				<div class="form-group">
+				<p>(compulsory format->prop1:value,prop2:value)</p>
 				<label class="control-label col-sm-2" for="properties">Properties:</label> 
 					<div class="col-sm-10">
 						<input type="text" class="form-control" name="properties"
-							required="true" />
+							 />
 					</div>
 				</div>
                 <button id="Enter" name="Enter" type="submit" value="enter" class="btn btn-block btn-primary btn-lg">Send incidence</button>

@@ -20,8 +20,8 @@ public class IncidentDTOTests {
 	
 	@Before
 	public void setUp() {
-		i1 = new IncidentDTO("i1", "System failure", "failure,proof", 20.2, 17.2, "","");
-		i2 = new IncidentDTO("i2", "Overheated system", "failure,heat,temperature", 20.2, 17.2, "heat.jpg","operator:Bombero,temperature:70");
+		i1 = new IncidentDTO("i1", "System failure", "failure,proof", 20.2, 17.2, "","","Bombero");
+		i2 = new IncidentDTO("i2", "Overheated system", "failure,heat,temperature", 20.2, 17.2, "heat.jpg","operator:Bombero,temperature:70","Bombero");
 		i3 = new IncidentDTO();
 	}
 
@@ -57,7 +57,7 @@ public class IncidentDTOTests {
 		assertEquals(inci.getTags(), tags);
 		assertEquals(inci.getName(), "i2");
 		assertTrue(inci.getLocation().getLng() == 17.2);
-		assertEquals(inci.getProperties().get("operator"),"Bombero");
+		assertEquals(inci.getProperties().get("type"),"Bombero");
 	}
 
 	@Test
@@ -70,11 +70,12 @@ public class IncidentDTOTests {
 		assertEquals(i2.getMultimedia(), "");
 		i2.setProperties("operator:Bombero,temperature:40");
 		assertEquals(i2.getProperties(), "operator:Bombero,temperature:40");
+		assertEquals(i1.getType(),"Bombero");
 	}
 
 	@Test
 	public void testToString() {
-		String result = "IncidentDTO [name=i1, description=System failure, tags=failure,proof, lat=20.2, lon=17.2, multimedia=, properties=]";
+		String result = "IncidentDTO [name=i1, description=System failure, tags=failure,proof, lat=20.2, lon=17.2, type=Bombero, multimedia=, properties=]";
 		assertEquals(i1.toString(), result);
 	}
 
