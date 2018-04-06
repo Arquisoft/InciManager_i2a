@@ -1,6 +1,5 @@
 package dbmanagement;
 
-import domain.Agent;
 import manager.incidents.Incident;
 
 /**
@@ -9,10 +8,6 @@ import manager.incidents.Incident;
  * <a href="https://spring.io/guides/gs/accessing-data-mongodb/">link here</a>
  */
 public interface Database {
-
-    void updateInfo(Agent user);
-
-    Agent getAgent(String name);
 
 	void saveIncident(Incident incident);
 

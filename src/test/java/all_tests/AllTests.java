@@ -10,7 +10,6 @@ import org.junit.runners.Suite.SuiteClasses;
 	domain_tests.UserAdapterTest.class,
 	domain_tests.UserLoginDataTest.class,
 	domain_tests.UserTest.class,
-	view_tests.AgentsDataControllerTest.class,
 	manager_tests.IncidentDTOTests.class,
 	manager_tests.IncidentTests.class,
 	manager_tests.IncidentToJSONTests.class,
