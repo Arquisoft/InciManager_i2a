@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import domain.Agent;
 import domain.AgentInfo;
 import manager.incidents.Incident;
 import manager.incidents.IncidentDTO;
@@ -30,9 +29,6 @@ import validators.AddInciValidator;
 public class IncidentController {
 
 	private boolean error = false;
-
-	// @Autowired
-	// private AgentsService agentsService;
 
 	@Autowired
 	private IncidentService incidentService;
