@@ -34,8 +34,8 @@ import domain.AgentLoginData;
 @Controller
 public class AgentsController {
 
-	AgentsController(/*AgentsService part*/) {
-		//this.part = part;
+	AgentsController() {
+		
 	}
 
 	// The first page shown will be login.html.
@@ -55,7 +55,7 @@ public class AgentsController {
 		Gson gson = new Gson();
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(postUrl);
-		StringEntity postingString = new StringEntity(gson.toJson(data));// gson.tojson() converts your pojo to json
+		StringEntity postingString = new StringEntity(gson.toJson(data));
 		
 		post.setEntity(postingString);
 		post.setHeader("Content-type", "application/json");
@@ -64,7 +64,6 @@ public class AgentsController {
 		HttpEntity entity = response.getEntity();
 		// Read the contents of an entity and return it as a String.
         String content = EntityUtils.toString(entity);
-        System.out.println(content);
 		
         String name = "", location = "",email = "", userid = "",kind = "";
         int kindCode = -1;
@@ -81,11 +80,9 @@ public class AgentsController {
 		} catch (JSONException e1) {
 			e1.printStackTrace();
 		} 
-        
-        
+
         AgentInfo agent = new AgentInfo(name,location,email,userid,kind,kindCode);
-        
-		
+
 		if (response.getStatusLine().getStatusCode() != 200) {
 			model.addAttribute("userinfo", data);
 			model.addAttribute("error",true);
@@ -100,26 +97,6 @@ public class AgentsController {
 			session.setAttribute("user", agent);
 			return "data";
 		}
-		
-//		Agent user = part.getAgent(data.getLogin(), data.getPassword(),
-//				data.getKind());
-//		if (user == null) {
-//			//UserLoginData data = new UserLoginData();
-//			model.addAttribute("userinfo", data);
-//			model.addAttribute("error",true);
-//			return "login";
-//		} else {
-//			AgentInfoAdapter adapter = new AgentInfoAdapter(user);
-//			AgentInfo info = adapter.userToInfo();
-//			model.addAttribute("name", info.getName());
-//			model.addAttribute("location", info.getLocation());
-//			model.addAttribute("email", info.getEmail());
-//			model.addAttribute("kind", info.getKind());
-//			model.addAttribute("kindCode", info.getKindCode());
-//			model.addAttribute("user", user);
-//			session.setAttribute("user", user);
-//			return "data";
-//		}
 	}
 	
 	@RequestMapping(value = "/data", method = RequestMethod.GET)
