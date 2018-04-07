@@ -7,22 +7,20 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 import domain.Agent;
-import services.AgentsService;
 import util.IncidentToJson;
 
 @Document(collection = "incidents")
 @JsonSerialize(using = IncidentToJson.class)
 public class Incident {
 	
-	@Autowired
-	private AgentsService agentServ;
+//	@Autowired
+//	private AgentsService agentServ;
 
 	@Id
 	private ObjectId id;
@@ -178,9 +176,9 @@ public class Incident {
 		this.agentId = agentId;
 	}
 
-	public Agent getAgent() {
-		return agentServ.getAgentById(agentId);
-	}
+//	public Agent getAgent() {
+//		return agentServ.getAgentById(agentId);
+//	}
 
 	public void setAgent(Agent agent) {
 		this.agentId = agent.getUserId();

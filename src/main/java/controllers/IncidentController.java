@@ -18,35 +18,35 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import domain.Agent;
+import domain.AgentInfo;
 import manager.incidents.Incident;
 import manager.incidents.IncidentDTO;
 import manager.producers.KafkaProducer;
-import services.AgentsService;
 import services.IncidentService;
 import util.SerializerLinker;
 import validators.AddInciValidator;
 
 @Controller
 public class IncidentController {
-	
+
 	private boolean error = false;
 
-	@Autowired
-	private AgentsService agentsService;
+	// @Autowired
+	// private AgentsService agentsService;
 
 	@Autowired
 	private IncidentService incidentService;
 
 	@Autowired
 	private KafkaProducer kafkaProducer;
-	
+
 	@Autowired
 	private AddInciValidator addValidator;
 
 	@RequestMapping("/incident/add")
 	public String landing(Model model, HttpSession session) {
 		model.addAttribute("incident", new IncidentDTO());
-		model.addAttribute("error",error);
+		model.addAttribute("error", error);
 		return "/incident/add";
 	}
 
@@ -55,29 +55,26 @@ public class IncidentController {
 			HttpSession session) throws IOException {
 		addValidator.validate(incident, result);
 		if (result.hasErrors()) {
-				error = true;
-				return "redirect:/incident/add";
+			error = true;
+			return "redirect:/incident/add";
 		}
 		error = false;
-		Agent agentSession = (Agent) session.getAttribute("user");
-		Agent agent = agentsService.getAgentByName(agentSession.getUsername());
-		if (agentSession.getUsername().equals(agent.getUsername())
-				&& agentSession.getPassword().equals(agent.getPassword())) {
-			incident.setType(type);
-			Incident incidentFinal = incident.getIncident();
-			incidentFinal.setAgentId(agent.getUsername());
-			incidentFinal.setKindCode(agent.getKindCode());
-			if (agent.getKind().equals("Sensor")) {
-				session.setAttribute("incident", incidentFinal);
-				return "/incident/sensorAdd";
-			} else {
-				incidentService.saveIncident(incidentFinal);
-				ObjectMapper objectMapper = new ObjectMapper();
-				objectMapper.registerModule(new SerializerLinker());
-				String json = objectMapper.writeValueAsString(incidentFinal);
-				kafkaProducer.send("incident", json);
-			}
+		AgentInfo agentSession = (AgentInfo) session.getAttribute("user");
+		incident.setType(type);
+		Incident incidentFinal = incident.getIncident();
+		incidentFinal.setAgentId(agentSession.getId());
+		incidentFinal.setKindCode(agentSession.getKindCode());
+		if (agentSession.getKind().equals("SENSOR")) {
+			session.setAttribute("incident", incidentFinal);
+			return "/incident/sensorAdd";
+		} else {
+			incidentService.saveIncident(incidentFinal);
+			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.registerModule(new SerializerLinker());
+			String json = objectMapper.writeValueAsString(incidentFinal);
+			kafkaProducer.send("incident", json);
 		}
+
 		return "redirect:data";
 	}
 
@@ -103,18 +100,16 @@ public class IncidentController {
 
 	@RequestMapping("incident/list")
 	public String listIncidents(Model model, HttpSession session) {
-		Agent agent = (Agent) session.getAttribute("user");
-		List<Incident> incidents = incidentService
-				.getIncidentsByAgentId(agentsService.getAgentByName(agent.getUsername()).getUsername());
+		AgentInfo agent = (AgentInfo) session.getAttribute("user");
+		List<Incident> incidents = incidentService.getIncidentsByAgentId(agent.getId());
 		model.addAttribute("incidList", incidents);
 		return "incident/list";
 	}
 
 	@RequestMapping("incident/details/{id}")
 	public String incidentDetails(Model model, @PathVariable ObjectId id, HttpSession session) {
-		Agent agent = (Agent) session.getAttribute("user");
-		List<Incident> incidents = incidentService
-				.getIncidentsByAgentId(agentsService.getAgentByName(agent.getUsername()).getUsername());
+		AgentInfo agent = (AgentInfo) session.getAttribute("user");
+		List<Incident> incidents = incidentService.getIncidentsByAgentId(agent.getId());
 		for (Incident i : incidents) {
 			if (i.getId().equals(id))
 				model.addAttribute("incident", i);
