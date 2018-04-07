@@ -12,7 +12,6 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -25,9 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.gson.Gson;
 
-import domain.Agent;
 import domain.AgentInfo;
-import domain.AgentInfoAdapter;
 import domain.AgentLoginData;
 
 /**
@@ -36,8 +33,6 @@ import domain.AgentLoginData;
  */
 @Controller
 public class AgentsController {
-
-	//private final AgentsService part;
 
 	AgentsController(/*AgentsService part*/) {
 		//this.part = part;
