@@ -24,6 +24,7 @@ public class FailedLoginSteps extends AbstractSteps{
 	public void i_login_with_name_and_password_and_kindCode(String arg1, String arg2, int arg3) throws Throwable {
 		executeGet("http://localhost:8070");
 		//POST FAILURE
+		//executePost("http://localhost:8070,arg1,arg2,arg3);
 	}
 
 	@Then("^I go back to the login page$")
