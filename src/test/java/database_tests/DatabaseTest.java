@@ -30,20 +30,14 @@ import services.IncidentService;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class DatabaseTest {
 
-//	@Autowired
-//	private AgentsRepository repo;
 	@Autowired
 	private IncidentRepository inciRepo;
-//	@Autowired
-//	private AgentsService agentServ;
 	@Autowired
 	private IncidentService inciServ;
 	@Autowired
 	private KafkaProducer kafka;
 
 	// User to use as reference for test
-	private Agent testedUser;
-	private Agent testedUser2;
 	private Agent a;
 	private Incident incident;
 
@@ -70,74 +64,12 @@ public class DatabaseTest {
 		incident.setProperties(new HashMap<String, Object>());
 		incident.getProperties().put("operator", "Paco");
 		dat.saveIncident(incident);
-		
-//		testedUser = new Agent("Luis", "10N20E", "LGracia@gmail.com", "Luis123",
-//				"100", "Person", 1);
-//		repo.insert(testedUser);
-//
-//		testedUser2 = new Agent("Maria", "20N20E", "asd", "pass14753", "321",
-//				"Person", 1);
-//		repo.insert(testedUser2);
 	}
 
 	@After
 	public void tearDown() {
-//		repo.delete(testedUser);
-//		repo.delete(testedUser2);
 		inciRepo.delete(incident);
 	}
-
-//	@Test
-//	public void testGetAgent() {
-//		// It should be previously encoded if the DB is given so this may be
-//		// changed.
-//		Agent user = dat.getAgent("Luis");
-//		user.setLocation("USA");
-//		Assert.assertEquals(user.getLocation(), "USA");
-//	}
-
-//	@Test
-//	public void testUpdateInfoWithPassword() {
-//		// It should be previously encoded if the DB is given so this may be
-//		// changed.
-//		Agent user = dat.getAgent("Luis");
-//		user.setPassword("confidencial");
-//		JasyptEncryptor encryptor = new JasyptEncryptor();
-//		dat.updateInfo(user);
-//		Agent userAfter = dat.getAgent("Luis");
-//		Assert.assertTrue(encryptor.checkPassword("confidencial",
-//				userAfter.getPassword())); // They should be the same when we
-//											// introduce the password.
-//		Assert.assertEquals(user, userAfter); // They should be the same user by
-//												// the equals.
-//
-//	}
-
-//	@Test
-//	public void testUpdateInfoAndAdaptation() {
-//		Agent user = dat.getAgent("Maria");
-//		Assert.assertEquals("Maria", user.getUsername());
-//		Assert.assertEquals("20N20E", user.getLocation());
-//		Assert.assertEquals("321", user.getUserId());
-//		Assert.assertEquals("asd", user.getEmail());
-//
-//		AgentInfoAdapter userAdapter = new AgentInfoAdapter(user);
-//
-//		AgentInfo userInfo = userAdapter.userToInfo();
-//
-//		Assert.assertEquals(user.getUsername(), userInfo.getName());
-//		Assert.assertEquals(user.getEmail(), userInfo.getEmail());
-//		Assert.assertEquals(user.getUserId(), userInfo.getId());
-//
-//		user.setUsername("Pepa");
-//		user.setEmail("asd@gmail.com");
-//
-//		dat.updateInfo(user);
-//		Agent updatedUser = dat.getAgent("Pepa");
-//		Assert.assertEquals("Pepa", updatedUser.getUsername());
-//		Assert.assertEquals("321", updatedUser.getUserId());
-//		Assert.assertEquals("asd@gmail.com", updatedUser.getEmail());
-//	}
 	
 	@Test
 	public void testSaveIncident() {
@@ -145,16 +77,6 @@ public class DatabaseTest {
 		Assert.assertEquals(1,incids.size());
 		Assert.assertEquals(incident, incids.get(0));
 	}
-	
-//	@Test
-//	public void testAgentService() {
-//		repo.insert(a);
-//		Assert.assertEquals(agentServ.getAgent("Luis", "Luis123"),testedUser );
-//		Assert.assertEquals(agentServ.getAgentByName("Luis"),testedUser );
-//		Assert.assertNull(agentServ.getAgent("aa","aaaaaaa"));
-//		Assert.assertEquals(agentServ.getAgentById("id1"), a);
-//		repo.delete(a);
-//	}
 	
 	@Test
 	public void testInciService() {
