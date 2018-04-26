@@ -13,7 +13,7 @@ import cucumber.api.java.en.When;
 public class AccessLoginPageSteps extends AbstractSteps {
 	@When("^the client calls /$")
 	public void the_client_calls() throws Throwable {
-		executeGet("http://localhost:8070");
+		executeGet("http://localhost:8081");
 	}
 
 	@Then("^the client receives status code of (\\d+)$")

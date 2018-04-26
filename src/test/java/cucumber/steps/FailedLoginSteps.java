@@ -22,7 +22,7 @@ public class FailedLoginSteps extends AbstractSteps{
 
 	@When("^I login with name \"([^\"]*)\" and password \"([^\"]*)\" and kindCode (\\d+)$")
 	public void i_login_with_name_and_password_and_kindCode(String arg1, String arg2, int arg3) throws Throwable {
-		executeGet("http://localhost:8070");
+		executeGet("http://localhost:8081");
 		//POST FAILURE
 		//executePost("http://localhost:8070,arg1,arg2,arg3);
 	}
