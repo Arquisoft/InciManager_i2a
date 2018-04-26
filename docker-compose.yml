@@ -1,0 +1,33 @@
+version: '3.4'
+
+services:
+  mongo:
+    image: mongo
+    command: mongod --port 27017
+    ports:
+      - "27017:27017"
+
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: localhost
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  incimanager:
+    build:
+      context: .
+    image: incimanageri2a
+    ports:
+      - "8081:8081"
+    depends_on:
+      - kafka
+      - mongo
