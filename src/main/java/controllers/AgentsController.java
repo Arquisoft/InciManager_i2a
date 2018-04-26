@@ -14,6 +14,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,9 @@ import domain.AgentLoginData;
  */
 @Controller
 public class AgentsController {
+	
+	@Value("${url.agentsmodule}")
+	private String agentsURL;
 
 	AgentsController() {
 		
@@ -51,7 +55,7 @@ public class AgentsController {
 	@RequestMapping(value = "/userForm", method = RequestMethod.POST)
 	public String showInfo(Model model, @ModelAttribute AgentLoginData data,
 			HttpSession session, BindingResult result) throws ClientProtocolException, IOException {
-		String postUrl = "http://localhost:8080/checkAgent";
+		String postUrl = agentsURL+"/checkAgent";
 		Gson gson = new Gson();
 		HttpClient httpClient = HttpClientBuilder.create().build();
 		HttpPost post = new HttpPost(postUrl);
