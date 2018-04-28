@@ -12,6 +12,7 @@ import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.DBObject;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
 import com.mongodb.util.JSON;
 
 import manager.producers.KafkaProducer;
@@ -25,7 +26,8 @@ public class InsertSampleDataService {
 	@PostConstruct
 	public void init() throws InterruptedException {
 		// Delete all documents in collection users
-		MongoClient mongoClient = new MongoClient("localhost", 27017);
+		MongoClientURI uri = new MongoClientURI("mongodb://admin:aswadmin2018@ds159489.mlab.com:59489/aswdb");
+		MongoClient mongoClient = new MongoClient(uri);
 		DB db = mongoClient.getDB("aswdb");
 		DBCollection agents = db.getCollection("users");
 		agents.remove(new BasicDBObject());
