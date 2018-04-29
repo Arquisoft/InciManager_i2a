@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.bson.types.ObjectId;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -103,11 +103,11 @@ public class IncidentController {
 	}
 
 	@RequestMapping("incident/details/{id}")
-	public String incidentDetails(Model model, @PathVariable ObjectId id, HttpSession session) {
+	public String incidentDetails(Model model, @PathVariable String id, HttpSession session) {
 		AgentInfo agent = (AgentInfo) session.getAttribute("user");
 		List<Incident> incidents = incidentService.getIncidentsByAgentId(agent.getId());
 		for (Incident i : incidents) {
-			if (i.getId().equals(id))
+			if (i.getId().toString().equals(id))
 				model.addAttribute("incident", i);
 		}
 
