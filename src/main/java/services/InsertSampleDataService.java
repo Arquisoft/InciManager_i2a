@@ -112,7 +112,7 @@ public class InsertSampleDataService {
 
 			incidents.insert(incidentObj);
 			if (emergency) {
-				kafkaProducer.send("incident", incidentJson);}
+				kafkaProducer.send(incidentJson);}
 			Thread.sleep(3000);
 
 	}

@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.junit.runner.RunWith;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationContextLoader;
+import org.springframework.boot.test.context.SpringBootContextLoader;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.test.context.ContextConfiguration;
@@ -19,9 +19,9 @@ import org.springframework.web.client.RestTemplate;
 import main.Application;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = Application.class, loader = SpringApplicationContextLoader.class)
+@ContextConfiguration(classes = Application.class, loader = SpringBootContextLoader.class)
 @WebAppConfiguration
-@IntegrationTest
+@SpringBootTest
 public class AbstractSteps {
 	protected static ResponseResults latestResponse = null;
 

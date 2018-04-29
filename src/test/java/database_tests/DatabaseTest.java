@@ -94,7 +94,7 @@ public class DatabaseTest {
 	public void kafkaTest() {
 		boolean isOkay = true;
 		try {
-			kafka.send("incidents", "Foo testing");
+			kafka.send("Foo testing");
 		}catch(Exception e) {
 			isOkay=false;
 		}

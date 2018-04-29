@@ -2,8 +2,9 @@ package manager.producers;
 
 import javax.annotation.ManagedBean;
 
-import org.apache.log4j.Logger;
+import org.jboss.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.util.concurrent.ListenableFuture;
@@ -14,13 +15,15 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
  */
 @ManagedBean
 public class KafkaProducer {
+	@Value("${kafka.topic}")
+	private String topic;
 
     private static final Logger logger = Logger.getLogger(KafkaProducer.class);
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
 
-    public void send(String topic, String data) {
+    public void send(String data) {
         ListenableFuture<SendResult<String, String>> future = kafkaTemplate.send(topic, data);
         future.addCallback(new ListenableFutureCallback<SendResult<String, String>>() {
             @Override

@@ -68,7 +68,7 @@ public class IncidentController {
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.registerModule(new SerializerLinker());
 			String json = objectMapper.writeValueAsString(incidentFinal);
-			kafkaProducer.send("incident", json);
+			kafkaProducer.send(json);
 		}
 
 		return "redirect:data";
@@ -88,7 +88,7 @@ public class IncidentController {
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.registerModule(new SerializerLinker());
 			String json = objectMapper.writeValueAsString(i);
-			kafkaProducer.send("incident", json);
+			kafkaProducer.send(json);
 		}
 		incidentService.saveIncident(i);
 		return "redirect:data";
