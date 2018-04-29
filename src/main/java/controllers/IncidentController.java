@@ -43,7 +43,7 @@ public class IncidentController {
 	public String landing(Model model, HttpSession session) {
 		model.addAttribute("incident", new IncidentDTO());
 		model.addAttribute("error", error);
-		return "/incident/add";
+		return "incident/add";
 	}
 
 	@RequestMapping("/send")
@@ -52,7 +52,7 @@ public class IncidentController {
 		addValidator.validate(incident, result);
 		if (result.hasErrors()) {
 			error = true;
-			return "redirect:/incident/add";
+			return "redirect:incident/add";
 		}
 		error = false;
 		AgentInfo agentSession = (AgentInfo) session.getAttribute("user");
@@ -62,7 +62,7 @@ public class IncidentController {
 		incidentFinal.setKindCode(agentSession.getKindCode());
 		if (agentSession.getKind().equals("SENSOR")) {
 			session.setAttribute("incident", incidentFinal);
-			return "/incident/sensorAdd";
+			return "incident/sensorAdd";
 		} else {
 			incidentService.saveIncident(incidentFinal);
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -76,7 +76,7 @@ public class IncidentController {
 
 	@RequestMapping("/incident/sensorAdd")
 	public String sensorAdd(HttpSession session) {
-		return "/incident/sensorAdd";
+		return "incident/sensorAdd";
 	}
 
 	@RequestMapping("/sensorAdd")

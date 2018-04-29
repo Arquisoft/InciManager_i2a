@@ -3,4 +3,4 @@ WORKDIR /usr/src/inciManageri2a
 COPY . /usr/src/inciManageri2a/
 RUN mvn package -Dmaven.test.skip=true
 EXPOSE 8081
-CMD ["java", "-jar", "jars/inciManager_i2a-0.0.1.jar", "--spring.kafka.bootstrap-servers=kafka:9092", "--url.agentsmodule=http://agents:8080"]
+CMD ["java", "-jar", "jars/inciManager_i2a-0.0.1.jar", "--url.agentsmodule=http://agents:8080"]

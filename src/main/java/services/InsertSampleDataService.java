@@ -1,7 +1,5 @@
 package services;
 
-import java.util.Random;
-
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,60 +60,7 @@ public class InsertSampleDataService {
 
 		agents.insert(dbObject2);
 
-		// Runs sensor simulation in background
-		Runnable runnable = new Runnable() {
-
-			public void run() {
-				while (true) {
-					// ------- code for task to run
-					try {
-						sensorSimulator(incidents);
-					} catch (InterruptedException e1) {
-
-						e1.printStackTrace();
-					}
-					// ------- ends here
-
-				}
-			}
-		};
-
-		Thread thread = new Thread(runnable);
-		thread.start();
 
 	}
 
-	private void sensorSimulator(DBCollection incidents) throws InterruptedException {
-		Random rand = new Random();
-
-
-		while(true)
-		{
-			int temperature = rand.nextInt(60);
-			boolean emergency = false;
-			if (temperature > 35) {
-				emergency = true;
-			}
-
-			String incidentJson = "{ "
-
-					+ " '_class' : 'manager.incidents.Incident'," + " 'name' : 'Temperature',"
-					+ " 'description' : 'Hight temperature'," 
-					+ " 'agentId' : 'Prueba02'," 
-					+ " 'kindCode': '3',"
-					+ " 'tags' : ['temperature'],"
-					+ " 'location' : {'lat' : 1234.0, 'lng' : 1234.0}," + " 'state' : 'OPEN',"
-					+ " 'properties' : {'temperature' : '" + temperature + "'}," + " 'multimedia' : [''],"
-					+ " 'emergency' : " + emergency + "}";
-
-			DBObject incidentObj = (DBObject) JSON.parse(incidentJson);
-
-			incidents.insert(incidentObj);
-			if (emergency) {
-				kafkaProducer.send(incidentJson);}
-			Thread.sleep(3000);
-
-	}
-
-	}
 }
