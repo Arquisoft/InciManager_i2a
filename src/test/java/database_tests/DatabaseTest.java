@@ -114,16 +114,30 @@ public class DatabaseTest {
 		IncidentDTO dto = new IncidentDTO();
 		dto.setTags("");
 		dto.setMultimedia("");
-		dto.setProperties(",");
+		dto.setProperties("a,");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setProperties(",a");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setProperties("a:");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setProperties(":a");
 		validator.validate(dto, new BindException(dto,"target"));
 		dto.setProperties("");
-		dto.setMultimedia(",");
+		dto.setMultimedia(",a");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setMultimedia("a,");
 		validator.validate(dto, new BindException(dto,"target"));
 		dto.setMultimedia("");
-		dto.setTags(",");
+		dto.setTags("a,");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setTags(",a");
 		validator.validate(dto, new BindException(dto,"target"));
 		dto.setTags("");
 		dto.setProperties("a::,a:a");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setProperties("a:a");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setProperties("");
 		validator.validate(dto, new BindException(dto,"target"));
 	}
 }

@@ -24,13 +24,12 @@ public class IncidentTests {
 	private Incident i2;
 	private Incident i3;
 
-	
 	@Before
 	public void setUp() {
 		i1 = new Incident("i1", "System failure", new Agent("alum", "alumnossi", "seguridad"), new ArrayList<String>(),
-				new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>(),1);
+				new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>(), 1);
 		i2 = new Incident("i2", "Overheated system", new Agent("alum", "alumnossi", "seguridad"),
-				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN,null, new ArrayList<String>(),1);
+				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN, null, new ArrayList<String>(), 1);
 		i3 = new Incident();
 	}
 
@@ -46,8 +45,6 @@ public class IncidentTests {
 		assertEquals(i2.getDescription(), "Sample");
 	}
 
-	
-
 	@Test
 	public void testLocation() {
 		assertTrue(i1.getLocation().getLat() == 20.2);
@@ -59,7 +56,7 @@ public class IncidentTests {
 		location.setLat(5.0);
 		location.setLng(6.7);
 		i3.setLocation(location);
-		assertEquals(i3.getLocation(),location);
+		assertEquals(i3.getLocation(), location);
 	}
 
 	@Test
@@ -114,37 +111,42 @@ public class IncidentTests {
 		String result = "{name='i1',description='System failure',agent='null',kindCode=1"
 				+ ",tags='[]',location='GeoCords [lat=20.2, lng=17.2]',state='OPEN',multimedia='[]',properties='temperature:20.1 fire:false ',emergency=false}";
 		assertEquals(i1.toString(), result);
+		i1.setProperties(null);
+		result = "{name='i1',description='System failure',agent='null',"
+				+ "kindCode=1,tags='[]',location='GeoCords [lat=20.2, lng=17.2]',"
+				+ "state='OPEN',multimedia='[]',emergency=false}";
+		assertEquals(i1.toString(), result);
 	}
-	
+
 	@Test
 	public void testAgent() {
-		assertEquals(i1.getAgentId(),null);
+		assertEquals(i1.getAgentId(), null);
 		i1.setAgentId("i1");
-		assertEquals(i1.getAgentId(),"i1");
+		assertEquals(i1.getAgentId(), "i1");
 		Agent a = new Agent();
 		a.setUserId("I1");
 		i1.setAgent(a);
-		assertEquals(i2.getKindCode(),1);
+		assertEquals(i2.getKindCode(), 1);
 		i1.setKindCode(2);
-		assertEquals(i1.getKindCode(),2);
-		assertEquals(i1.getAgentId(),"I1");
-		Incident i5 = new Incident("i2", "Overheated system","i2",
-				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN,null, new ArrayList<String>(),1);
-		assertEquals(i5.getAgentId(),"i2");
-		Incident i6 = new Incident("i2", "Overheated system","i2",
-				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>(),1);
-		assertEquals(i6.getAgentId(),"i2");
-		assertEquals(i6.hashCode(),i6.hashCode());
+		assertEquals(i1.getKindCode(), 2);
+		assertEquals(i1.getAgentId(), "I1");
+		Incident i5 = new Incident("i2", "Overheated system", "i2", new ArrayList<String>(), new LatLng(20.2, 17.2),
+				InciState.OPEN, null, new ArrayList<String>(), 1);
+		assertEquals(i5.getAgentId(), "i2");
+		Incident i6 = new Incident("i2", "Overheated system", "i2", new ArrayList<String>(), new LatLng(20.2, 17.2),
+				InciState.OPEN, new ArrayList<String>(), 1);
+		assertEquals(i6.getAgentId(), "i2");
+		assertEquals(i6.hashCode(), i6.hashCode());
 		assertTrue(i6.equals(i6));
 		assertFalse(i6.equals(null));
 		assertFalse(i6.equals(""));
 		Incident i7 = new Incident();
 		i1.setId(new ObjectId());
 		i2.setId(new ObjectId());
+		assertEquals(i1.hashCode(), i1.hashCode());
 		assertFalse(i7.equals(i1));
 		assertFalse(i2.equals(i1));
-		
+
 	}
-	
 
 }

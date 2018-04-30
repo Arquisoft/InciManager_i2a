@@ -122,6 +122,7 @@ public class UserTest {
 		Assert.assertTrue(alba.equals(a));
 		Assert.assertTrue(alba.equals(alba));
 		Assert.assertFalse(alba.equals(null));
+		Assert.assertFalse(alba.equals(""));
 	}
 
 }

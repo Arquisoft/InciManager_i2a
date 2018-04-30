@@ -33,7 +33,7 @@ public class AddInciValidator implements Validator {
 		}
 		HashMap<String, Object> properties = new HashMap<String, Object>();
 		try {
-			if (inci.getProperties() != null && !inci.getProperties().isEmpty()) {
+			if (!inci.getProperties().isEmpty()) {
 				List<String> propList = Arrays.asList(inci.getProperties().split(","));
 				for (String p : propList) {
 					List<String> ar = Arrays.asList(p.split(":"));
