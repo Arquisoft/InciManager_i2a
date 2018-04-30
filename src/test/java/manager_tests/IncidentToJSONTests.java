@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.bson.types.ObjectId;
 import org.junit.Test;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -20,7 +21,8 @@ public class IncidentToJSONTests {
 	private String incidentJson = "{\"name\":\"Prueba\",\"description\":\"Sunday rain\","
 			+ "\"agentId\":\"AA\",\"kindCode\":\"1\",\"tags\":[\"heat\",\"failure\"],\"location\""
 			+ ":{\"lat\":\"15.6\",\"lng\":\"125.0\"},\"state\":\"INPROCESS\",\"multimedia\""
-			+ ":[\"heat.jpg\",\"fire!.jpg\"],\"properties\":{\"type\":\"Bombero\"}}";
+			+ ":[\"heat.jpg\",\"fire!.jpg\"],\"properties\":{\"type\":\"Bombero\"},\"incidentId\":"
+			+ "\"507f1f77bcf86cd799439011\"}";
 
 	@Test
 	public void serialize() throws Exception {
@@ -44,7 +46,7 @@ public class IncidentToJSONTests {
 		incident.addFile("fire!.jpg");
 		incident.setProperties(new HashMap<String, Object>());
 		incident.getProperties().put("type", "Bombero");
-
+		incident.setId(new ObjectId("507f1f77bcf86cd799439011"));
 		String json = objectMapper.writeValueAsString(incident);
 		assertEquals(incidentJson, json);
 	}
