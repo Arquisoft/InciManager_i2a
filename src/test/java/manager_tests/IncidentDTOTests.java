@@ -71,6 +71,8 @@ public class IncidentDTOTests {
 		i2.setProperties("operator:Bombero,temperature:40");
 		assertEquals(i2.getProperties(), "operator:Bombero,temperature:40");
 		assertEquals(i1.getType(),"Bombero");
+		i1.setType("Medico");
+		assertEquals(i1.getType(),"Medico");
 	}
 
 	@Test

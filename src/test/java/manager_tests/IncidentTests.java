@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.bson.types.ObjectId;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -133,6 +134,17 @@ public class IncidentTests {
 		Incident i6 = new Incident("i2", "Overheated system","i2",
 				new ArrayList<String>(), new LatLng(20.2, 17.2), InciState.OPEN, new ArrayList<String>(),1);
 		assertEquals(i6.getAgentId(),"i2");
+		assertEquals(i6.hashCode(),i6.hashCode());
+		assertTrue(i6.equals(i6));
+		assertFalse(i6.equals(null));
+		assertFalse(i6.equals(""));
+		Incident i7 = new Incident();
+		i1.setId(new ObjectId());
+		i2.setId(new ObjectId());
+		assertFalse(i7.equals(i1));
+		assertFalse(i2.equals(i1));
+		
 	}
+	
 
 }

@@ -1,5 +1,7 @@
 package database_tests;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +14,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.validation.BindException;
 
 import dbmanagement.Database;
 import dbmanagement.IncidentRepository;
@@ -19,9 +22,11 @@ import domain.Agent;
 import main.Application;
 import manager.incidents.InciState;
 import manager.incidents.Incident;
+import manager.incidents.IncidentDTO;
 import manager.incidents.LatLng;
 import manager.producers.KafkaProducer;
 import services.IncidentService;
+import validators.AddInciValidator;
 
 /**
  * Created by Nicolás on 15/02/2017. Modified by Marcos on 17/02/2018
@@ -36,6 +41,8 @@ public class DatabaseTest {
 	private IncidentService inciServ;
 	@Autowired
 	private KafkaProducer kafka;
+	@Autowired
+	private AddInciValidator validator;
 
 	// User to use as reference for test
 	private Agent a;
@@ -99,5 +106,24 @@ public class DatabaseTest {
 			isOkay=false;
 		}
 		Assert.assertTrue(isOkay);
+	}
+	
+	@Test
+	public void testValidator() {
+		assertTrue(validator.supports(IncidentDTO.class));
+		IncidentDTO dto = new IncidentDTO();
+		dto.setTags("");
+		dto.setMultimedia("");
+		dto.setProperties(",");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setProperties("");
+		dto.setMultimedia(",");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setMultimedia("");
+		dto.setTags(",");
+		validator.validate(dto, new BindException(dto,"target"));
+		dto.setTags("");
+		dto.setProperties("a::,a:a");
+		validator.validate(dto, new BindException(dto,"target"));
 	}
 }

@@ -240,4 +240,8 @@ public class Incident {
 		this.kindCode = kindCode;
 	}
 	
+	public void setId(ObjectId foo) {
+		this.id=foo;
+	}
+	
 }
