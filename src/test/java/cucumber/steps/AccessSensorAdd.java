@@ -3,19 +3,20 @@ package cucumber.steps;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertEquals;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Value;
 
-import com.google.gson.Gson;
+import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.client.WireMock;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -84,18 +85,42 @@ public class AccessSensorAdd extends AbstractSteps{
 	@When("I login with name \"(.+)\" and password \"(.+)\" and kindCode \"(.+)\"$")
 	public void login_with_name_and_password_and_kindcode(String name, String password, String kindcode) throws IOException {
 		AgentLoginData data = new AgentLoginData(name, password, kindcode);
-		executeGet("http://localhost:8081");
-		String postUrl = agentsURL+"/checkAgent";
-		Gson gson = new Gson();
-		HttpClient httpClient = HttpClientBuilder.create().build();
-		HttpPost post = new HttpPost(postUrl);
-		StringEntity postingString = new StringEntity(gson.toJson(data));
+//		executeGet("http://localhost:8081");
+//		String postUrl = agentsURL+"/checkAgent";
+//		Gson gson = new Gson();
+//		HttpClient httpClient = HttpClientBuilder.create().build();
+//		HttpPost post = new HttpPost(postUrl);
+//		StringEntity postingString = new StringEntity(gson.toJson(data));
+//		
+//		post.setEntity(postingString);
+//		post.setHeader("Content-type", "application/json");
+//		HttpResponse response = httpClient.execute(post);
+//		final StatusLine currentStatusCode = response.getStatusLine();
+//        assertThat( currentStatusCode.getStatusCode(),equalTo("200"));
+		String jsonString = "{ 'login' : "+name+","
+				+ " 'password' : "+password+","
+				+ " 'kind' : "+kindcode
+				+ " }";
+		WireMockServer wireMockServer = new WireMockServer();
+		CloseableHttpClient httpClient = HttpClients.createDefault();
+		wireMockServer.start();
+		WireMock.configureFor("localhost", 8081);
+		WireMock.stubFor(WireMock.post(WireMock.urlEqualTo("/userForm"))
+		  .withHeader("content-type", WireMock.equalTo("application/json"))
+		  .withRequestBody(WireMock.containing("login"))
+		  .willReturn(WireMock.aResponse().withStatus(200)));
 		
-		post.setEntity(postingString);
-		post.setHeader("Content-type", "application/json");
-		HttpResponse response = httpClient.execute(post);
-		final StatusLine currentStatusCode = response.getStatusLine();
-        assertThat( currentStatusCode.getStatusCode(),equalTo("200"));
+		HttpPost request = new HttpPost("http://localhost:8081/userForm");
+		StringEntity entity = new StringEntity(jsonString);
+		request.addHeader("content-type", "application/json");
+		request.setEntity(entity);
+		HttpResponse response = httpClient.execute(request);
+		
+		assertEquals(200, response.getStatusLine().getStatusCode());
+		WireMock.verify(WireMock.postRequestedFor(WireMock.urlEqualTo("/userForm"))
+		  .withHeader("content-type", WireMock.equalTo("application/json")));
+		
+		wireMockServer.stop();
 	}
 	
 	@And("^I call /incident/add$")

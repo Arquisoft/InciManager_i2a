@@ -1,7 +1,8 @@
 package cucumber.steps;
 
 import java.util.List;
-
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 import cucumber.AbstractSteps;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -19,14 +20,14 @@ public class FailedLoginSteps extends AbstractSteps{
 
 	@When("^I login with name \"([^\"]*)\" and password \"([^\"]*)\" and kindCode (\\d+)$")
 	public void i_login_with_name_and_password_and_kindCode(String arg1, String arg2, int arg3) throws Throwable {
-		//executeGet("http://localhost:8081");
+		executeGet("http://localhost:8081");
 		//POST FAILURE
-		//executePost("http://localhost:8070,arg1,arg2,arg3);
+		//executePost("http://localhost:8070",arg1,arg2,arg3);
 	}
 
 	@Then("^I go back to the login page$")
 	public void i_go_back_to_the_login_page() throws Throwable {
-		//assertThat(latestResponse.getBody(),containsString("Login")) ;
+		assertThat(latestResponse.getBody(),containsString("Login")) ;
 	}
 
 }

@@ -68,6 +68,7 @@ public class IncidentController {
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.registerModule(new SerializerLinker());
 			String json = objectMapper.writeValueAsString(incidentFinal);
+			System.out.println(json);
 			kafkaProducer.send(json);
 		}
 
