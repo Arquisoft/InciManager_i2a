@@ -39,14 +39,14 @@ public class IncidentController {
 	@Autowired
 	private AddInciValidator addValidator;
 
-	@RequestMapping("/incident/add")
+	@RequestMapping("incident/add")
 	public String landing(Model model, HttpSession session) {
 		model.addAttribute("incident", new IncidentDTO());
 		model.addAttribute("error", error);
 		return "incident/add";
 	}
 
-	@RequestMapping("/send")
+	@RequestMapping("send")
 	public String send(Model model, @Validated IncidentDTO incident, BindingResult result, @RequestParam String type,
 			HttpSession session) throws IOException {
 		addValidator.validate(incident, result);
@@ -74,12 +74,12 @@ public class IncidentController {
 		return "redirect:data";
 	}
 
-	@RequestMapping("/incident/sensorAdd")
+	@RequestMapping("incident/sensorAdd")
 	public String sensorAdd(HttpSession session) {
 		return "incident/sensorAdd";
 	}
 
-	@RequestMapping("/sensorAdd")
+	@RequestMapping("sensorAdd")
 	public String sensorAdd(Model model, @RequestParam String emergency, HttpSession session) throws IOException {
 		Incident i = (Incident) session.getAttribute("incident");
 		if (!emergency.equals("false")) {
@@ -107,8 +107,16 @@ public class IncidentController {
 		AgentInfo agent = (AgentInfo) session.getAttribute("user");
 		List<Incident> incidents = incidentService.getIncidentsByAgentId(agent.getId());
 		for (Incident i : incidents) {
-			if (i.getId().toString().equals(id))
-				model.addAttribute("incident", i);
+			if (i.getId().toString().equals(id)) {
+				model.addAttribute("name", i.getName());
+				model.addAttribute("description", i.getDescription());
+				model.addAttribute("agentId", i.getAgentId());
+				model.addAttribute("location", i.getLocation());
+				model.addAttribute("tags", i.getTags());
+				model.addAttribute("properties", i.getProperties());
+				model.addAttribute("multimedia", i.getMultimedia());
+				model.addAttribute("state", i.getState());
+			}
 		}
 
 		return "incident/details";
