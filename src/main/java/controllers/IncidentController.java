@@ -68,7 +68,6 @@ public class IncidentController {
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.registerModule(new SerializerLinker());
 			String json = objectMapper.writeValueAsString(incidentFinal);
-			List<Incident> incidents = incidentService.getIncidentsByAgentId(agentSession.getId());
 			kafkaProducer.send(json);
 		}
 
