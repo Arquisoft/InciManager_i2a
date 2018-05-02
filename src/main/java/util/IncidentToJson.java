@@ -51,9 +51,10 @@ public class IncidentToJson extends JsonSerializer<Incident> {
 			jsonGenerator.writeObjectField(key, incident.getProperties().get(key));
 		}
 		jsonGenerator.writeEndObject();
-		
+
 		// incident's id
 		jsonGenerator.writeStringField("incidentId", incident.getId().toString());
+
 
 		jsonGenerator.writeEndObject();
 	}

@@ -82,15 +82,17 @@ public class IncidentController {
 	@RequestMapping("sensorAdd")
 	public String sensorAdd(Model model, @RequestParam String emergency, HttpSession session) throws IOException {
 		Incident i = (Incident) session.getAttribute("incident");
+		incidentService.saveIncident(i);
 		if (!emergency.equals("false")) {
 			i.setEmergency(true);
 			System.out.println(i.toString());
 			ObjectMapper objectMapper = new ObjectMapper();
+			System.out.println(objectMapper.toString());
 			objectMapper.registerModule(new SerializerLinker());
 			String json = objectMapper.writeValueAsString(i);
 			kafkaProducer.send(json);
 		}
-		incidentService.saveIncident(i);
+		
 		return "redirect:data";
 	}
 
