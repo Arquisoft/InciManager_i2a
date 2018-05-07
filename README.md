@@ -28,15 +28,15 @@ You will need to run Zookeeper to start the application. You should go to the di
 ### **3. Insert documents in MongoDB database**
 	As this module is currently working along other modules, in order to have an agent to test the application, you should run the 
 	[Loader](https://github.com/Arquisoft/Loader_i2a) module, which will add the agents you specify in a xls file to the database 		that this module uses.
-### **5. Run the project**
+### **4. Run the project**
 	Download the project and go to its directory, open there a command prompt and execute:
 		> mvn spring-boot:run
 	Now the application is running if all it's correct.
 	
-### **6. Start using the application**
-	Open http://localhost:8080/ on you navigator and login to use the application.
+### **5. Start using the application**
+	Open http://localhost:8081/ on you navigator and login to use the application.
 
-### **7. Test the application**
+### **6. Test the application**
 	To run the tests just use `mvn test`. No data in the database is needed to run them.
 
  
