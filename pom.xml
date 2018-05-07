@@ -166,7 +166,6 @@
 					<excludes>
 					<exclude>**/controllers/**</exclude>
 					<exclude>**/main/**</exclude>
-					<exclude>**/producers/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
