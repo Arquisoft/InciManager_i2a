@@ -162,6 +162,13 @@
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.7.201606060606</version>
+				<configuration>
+					<excludes>
+					<exclude>**/controllers/**</exclude>
+					<exclude>**/main/**</exclude>
+					<exclude>**/producers/**</exclude>
+					</excludes>
+				</configuration>
 				<executions>
 					<execution>
 						<goals>
