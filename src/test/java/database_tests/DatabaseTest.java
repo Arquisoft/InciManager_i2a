@@ -98,17 +98,6 @@ public class DatabaseTest {
 	}
 	
 	@Test
-	public void kafkaTest() {
-		boolean isOkay = true;
-		try {
-			kafka.send("Foo testing");
-		}catch(Exception e) {
-			isOkay=false;
-		}
-		Assert.assertTrue(isOkay);
-	}
-	
-	@Test
 	public void testValidator() {
 		assertTrue(validator.supports(IncidentDTO.class));
 		IncidentDTO dto = new IncidentDTO();

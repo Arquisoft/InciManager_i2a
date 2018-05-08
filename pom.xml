@@ -166,6 +166,7 @@
 					<excludes>
 					<exclude>**/AgentsController.**</exclude>
 					<exclude>**/main/**</exclude>
+					<exclude>**/producers/**</exclude>
 					</excludes>
 				</configuration>
 				<executions>
