@@ -12,7 +12,7 @@ public class ResponseResults
     private final ClientHttpResponse theResponse;
     private final String body;
 
-    public ResponseResults(final ClientHttpResponse response) throws IOException
+    protected ResponseResults(final ClientHttpResponse response) throws IOException
     {
         this.theResponse = response;
         final InputStream bodyInputStream = response.getBody();

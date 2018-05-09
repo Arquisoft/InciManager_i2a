@@ -1,7 +1,5 @@
 package cucumber.steps;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
@@ -37,7 +35,7 @@ public class AccessIncidentDetail extends AbstractSteps {
 		AgentInfo agentSession = new AgentInfo( "pepe", "10", "@", "555555555A", "1", 1);
 		session = new MockHttpSession();
 		session.setAttribute("agentInfo", agentSession);
-		MockHttpServletRequestBuilder request = get("http://localhost:8081/incident/details/{id}", id);
+		MockHttpServletRequestBuilder request = get("/incident/details/{id}", id).session(session);
 		result = mockMvc.perform(request).andReturn().getResponse();
 		MatcherAssert.assertThat(result.getStatus(), equalTo(200));
 		
