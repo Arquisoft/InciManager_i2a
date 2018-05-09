@@ -59,9 +59,9 @@ public class IncidentDTOTests {
 		assertTrue(inci.getLocation().getLng() == 17.2);
 		assertEquals(inci.getProperties().get("type"),"Bombero");
 		i2.setProperties(null);
-		Incident i = i2.getIncident();
+
 		i2.setProperties("");
-		Incident ia = i2.getIncident();
+
 	}
 
 	@Test

@@ -24,7 +24,6 @@ import manager.incidents.InciState;
 import manager.incidents.Incident;
 import manager.incidents.IncidentDTO;
 import manager.incidents.LatLng;
-import manager.producers.KafkaProducer;
 import services.IncidentService;
 import validators.AddInciValidator;
 
@@ -39,8 +38,6 @@ public class DatabaseTest {
 	private IncidentRepository inciRepo;
 	@Autowired
 	private IncidentService inciServ;
-	@Autowired
-	private KafkaProducer kafka;
 	@Autowired
 	private AddInciValidator validator;
 
