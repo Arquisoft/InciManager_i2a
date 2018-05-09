@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootContextLoader;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -26,7 +27,11 @@ public class AbstractSteps {
 	protected static ResponseResults latestResponse = null;
 
 	public RestTemplate restTemplate = null;
+	protected MockHttpServletResponse result;
 
+	protected void setResultMock(MockHttpServletResponse result) {
+		this.result=result;
+	}
 	protected void executeGet(String url) throws IOException {
 		final Map<String, String> headers = new HashMap<>();
 		headers.put("Accept", "application/json");

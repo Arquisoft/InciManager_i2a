@@ -105,8 +105,9 @@ public class IncidentController {
 	}
 
 	@RequestMapping("incident/details/{id}")
-	public String incidentDetails(Model model, @PathVariable String id, HttpSession session) {
+	public String incidentDetails(Model model, @PathVariable("id") String id, HttpSession session) {
 		AgentInfo agent = (AgentInfo) session.getAttribute("user");
+		System.out.println("this: " +agent.toString());
 		List<Incident> incidents = incidentService.getIncidentsByAgentId(agent.getId());
 		for (Incident i : incidents) {
 			if (i.getId().toString().equals(id)) {

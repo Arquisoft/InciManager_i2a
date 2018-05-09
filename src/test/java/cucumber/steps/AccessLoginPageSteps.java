@@ -11,9 +11,9 @@ import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 
 public class AccessLoginPageSteps extends AbstractSteps {
-	@When("^the client calls \"(.+)\"$")
-	public void the_client_calls(String arg1) throws Throwable {
-		executeGet("http://localhost:8081"+arg1);
+	@When("^the client calls /$")
+	public void the_client_calls() throws Throwable {
+		executeGet("http://localhost:8081");
 	}
 
 	@Then("^the client receives status code of (\\d+)$")
@@ -24,7 +24,7 @@ public class AccessLoginPageSteps extends AbstractSteps {
 
 	@Then("^the client receives the string \"(.*?)\"$")
 	public void the_client_receives_the_string(String arg1) throws Throwable {
-		assertThat(latestResponse.getBody(),containsString("Incidence")) ;
+		assertThat(latestResponse.getBody(),containsString(arg1)) ;
 	}
 }
 
