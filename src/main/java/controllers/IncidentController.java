@@ -38,6 +38,8 @@ public class IncidentController {
 
 	@Autowired
 	private AddInciValidator addValidator;
+	
+	private AgentInfo agentLogged;
 
 	@RequestMapping("incident/add")
 	public String landing(Model model, HttpSession session) {
@@ -55,7 +57,7 @@ public class IncidentController {
 			return "redirect:incident/add";
 		}
 		error = false;
-		AgentInfo agentSession = (AgentInfo) session.getAttribute("user");
+		AgentInfo agentSession = agentLogged;
 		incident.setType(type);
 		Incident incidentFinal = incident.getIncident();
 		incidentFinal.setAgentId(agentSession.getId());
@@ -98,7 +100,7 @@ public class IncidentController {
 
 	@RequestMapping("incident/list")
 	public String listIncidents(Model model, HttpSession session) {
-		AgentInfo agent = (AgentInfo) session.getAttribute("user");
+		AgentInfo agent = agentLogged;
 		List<Incident> incidents = incidentService.getIncidentsByAgentId(agent.getId());
 		model.addAttribute("incidList", incidents);
 		return "incident/list";
@@ -106,7 +108,7 @@ public class IncidentController {
 
 	@RequestMapping("incident/details/{id}")
 	public String incidentDetails(Model model, @PathVariable("id") String id, HttpSession session) {
-		AgentInfo agent = (AgentInfo) session.getAttribute("user");
+		AgentInfo agent = agentLogged;
 		System.out.println("this: " +agent.toString());
 		List<Incident> incidents = incidentService.getIncidentsByAgentId(agent.getId());
 		for (Incident i : incidents) {
@@ -123,6 +125,10 @@ public class IncidentController {
 		}
 
 		return "incident/details";
+	}
+
+	public void setAgent(AgentInfo agent) {
+		agentLogged = agent;
 	}
 
 }

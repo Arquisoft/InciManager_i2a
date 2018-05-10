@@ -14,6 +14,7 @@ import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,6 +38,10 @@ public class AgentsController {
 	
 	@Value("${url.agentsmodule}")
 	private String agentsURL;
+	@Autowired
+	private IncidentController inciController;
+	
+	private AgentInfo agentLogged;
 
 	AgentsController() {
 		
@@ -98,14 +103,15 @@ public class AgentsController {
 			model.addAttribute("kind", agent.getKind());
 			model.addAttribute("kindCode", agent.getKindCode());
 			model.addAttribute("user", agent);
-			session.setAttribute("user", agent);
+			agentLogged = agent;
+			inciController.setAgent(agent);
 			return "data";
 		}
 	}
 	
 	@RequestMapping(value = "/data", method = RequestMethod.GET)
 	public String data(Model model, HttpSession session) {
-		AgentInfo agentSession = (AgentInfo) session.getAttribute("user");
+		AgentInfo agentSession = agentLogged;
 		model.addAttribute("name", agentSession.getName());
 		model.addAttribute("location", agentSession.getLocation());
 		model.addAttribute("email", agentSession.getEmail());
