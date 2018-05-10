@@ -5,7 +5,7 @@
 [![codecov](https://codecov.io/gh/Arquisoft/InciManager_i2a/branch/master/graph/badge.svg)](https://codecov.io/gh/Arquisoft/InciManager_i2a)
 [![Codefresh build status]( https://g.codefresh.io/api/badges/build?repoOwner=Arquisoft&repoName=InciManager_i2a&branch=master&pipelineName=InciManager_i2a&accountName=javicodema&type=cf-1)]( https://g.codefresh.io/repositories/Arquisoft/InciManager_i2a/builds?filter=trigger:build;branch:master;service:5ad478185e7a2500012fdeb5~InciManager_i2a)
 
-Incidents Manager module
+Incidents Manager module (part of final [Inci_i2a](https://github.com/Arquisoft/Inci_i2a) module). Below we give you the instructions to run this module in your local host. For that purpose, you also need to run the [Agents](https://github.com/Arquisoft/Agents_i2a) module as it is explained in the GitHub page. Otherwise, if you want to run it with the complete application and deploy it online, you should follow the instructions given in the Inci_i2a GitHub page.
 
 # 17-18 Authors
 - [Marcos Chacón Cadenas](https://github.com/chacon11)
